@@ -1,0 +1,16 @@
+<li (click)="open($event, todo.done)" *ngFor="let todo of listItems; let idx = index; trackBy: trackByTodo;"
+    [class.hide_todo]="filter ? filterId ? false : todo.done : !todo.done" class="todos__item todos__item_todo animated">{{todo.value}}
+    <input [(ngModel)]="todo.done" (click)="checkTodo(!todo.done, idx, listItems, userId)"
+           type='checkbox' class='todos__checkbox todos__checkbox_sub'>
+    <button (click)="modWinDelHandler(idx, userId, $event.target)"  class='todos__checkbox todos__checkbox_del animated>'></button>
+    <div class='todos__edit_item animated__long'>
+        <input (keyup.enter)="todoService.edit(inputTodo, idx, inputTodo.value, listItems, userId);"
+               (keyup.escape)="todoService.hideEl(inputTodo)" #inputTodo [value]="todo.value" type='text' class='todos__edit'>
+    </div>
+</li>
+<ul class="filters__nav">
+    <li class="filters__item"><span md-raised-button (click)="filter = true; filterId = true; todoService.hightlightFilter($event.target, this.selector);" class="filters__link animated act">All</span></li>
+    <li class="filters__item"><span md-raised-button (click)="filter = true; filterId = false; todoService.hightlightFilter($event.target, this.selector);" class="filters__link animated">Active</span></li>
+    <li class="filters__item"><span md-raised-button (click)="filter = false; todoService.hightlightFilter($event.target, this.selector);" class="filters__link animated">Completed</span></li>
+    <li class="filters__item"><span md-raised-button (click)="modWinDelHandler()" type="submit"  class=" filters__link animated">Del. Completed</span></li>
+</ul>
