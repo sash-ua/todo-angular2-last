@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11,50 +10,44 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var core_1 = require('@angular/core');
-var error_handler_service_1 = require("../error.handler.service/error.handler.service");
-var Observable_1 = require("rxjs/Observable");
-var app_module_1 = require("../../app.module");
-//AOT
-// import {FB} from "../../app.module";
-// import {database, auth} from 'firebase';
-//AOT todo
-// JIT
-var app_1 = require('firebase/app');
-require('firebase/database');
-// JIT
-var TodosService = (function () {
+import { Injectable, Inject } from '@angular/core';
+import { ErrorHandlerService } from "../error.handler.service/error.handler.service";
+import { Observable } from "rxjs/Observable";
+import { firebaseConfig } from "../../app.module";
+import { FB as firebase } from "../../app.module";
+import 'firebase/database';
+export var TodosService = (function () {
     function TodosService(errorH) {
-        this.lSName = ['todos', 'guest_todos', 'true', 'userId', ("firebase:authUser:" + app_module_1.firebaseConfig.apiKey + ":[DEFAULT]"), 'Log In or Register', 'todos__item_todo'];
-        this.inputFieldHeight = '75px';
+        this.lSName = ['todos', 'guest_todos', 'true', 'userId', ("firebase:authUser:" + firebaseConfig.apiKey + ":[DEFAULT]"), 'Log In or Register', 'todos__item_todo'];
         this.errorH = errorH;
     }
     // Get data from database.
     TodosService.prototype.getData = function (userId) {
-        return app_1.default.database().ref('/' + userId).once('value'); //JIT
-        // return FB.database().ref('/' + userId).once('value'); //AOT todo
+        return firebase.database().ref('/' + userId).once('value'); //JIT
     };
     // Create Observable from the object.
     TodosService.prototype.createObs = function (obj) {
-        return Observable_1.Observable.create(function (obs) { return obs.next(obj); });
+        return Observable.create(function (obs) { return obs.next(obj); });
     };
     // Object to JSON string and vice versa
     TodosService.prototype.jsonify = function (data) {
-        return (typeof data === 'object') ? JSON.stringify(data) : (typeof data === 'string') ? JSON.parse(data) : new Error('jsonify Error');
+        return (typeof data === 'object') ? JSON.stringify(data) : (typeof data === 'string') ? JSON.parse(data) : this.errorH.handleError(new Error('jsonify Error'));
     };
     // Get LS by key
-    TodosService.prototype.getLocalStorage = function (key) {
-        return localStorage.getItem(key);
+    TodosService.prototype.getLocalStorage = function (jsonify) {
+        return function (key) {
+            return jsonify(localStorage.getItem(key));
+        };
     };
     // Save data to LS and/or database
-    TodosService.prototype.setLocalStorage = function (arr, userId) {
+    TodosService.prototype.setLocalStorage = function (arr, lSName, userId) {
         var data = JSON.stringify(arr);
-        if (userId === this.lSName[1] || !userId) {
-            localStorage.setItem(this.lSName[1], data);
+        if (userId === lSName[1] || !userId) {
+            localStorage.setItem(lSName[1], data);
         }
         else {
-            localStorage.setItem(this.lSName[0], data);
-            app_1.default.database().ref('/' + userId).set(data); //JIT
+            localStorage.setItem(lSName[0], data);
+            firebase.database().ref('/' + userId).set(data); //JIT
         }
     };
     // Clear LS
@@ -67,25 +60,21 @@ var TodosService = (function () {
     TodosService.prototype.simpleJsonObjValid = function (data) {
         return (typeof (data) === 'object' && data !== null && data.length > 0);
     };
-    // App init. Get JSON object, then the validity check with simpleJsonObjValid(), save to localStorage, init. listItems,
-    // set id (index number of last to do item)
-    TodosService.prototype.appInit = function (data, userId) {
-        var listItems, init, id, savedObj = this.jsonify(data);
-        if (this.simpleJsonObjValid(savedObj)) {
-            listItems = savedObj;
-            this.setLocalStorage(listItems, userId);
-            return [listItems, true];
+    // App init. Get JSON object, then the validity check with simpleJsonObjValid(), save to localStorage, init. listItems.
+    TodosService.prototype.appInit = function (listItems, lSName, userId) {
+        var b;
+        if (this.simpleJsonObjValid(listItems)) {
+            b = [listItems, true];
         }
         else {
-            listItems = [];
-            this.setLocalStorage(listItems, userId);
-            return [listItems, false];
+            b = [listItems = [], false];
         }
+        this.setLocalStorage(listItems, lSName, userId);
+        return b;
     };
     // Add item to array.
     TodosService.prototype.addItem = function (val, arr) {
-        arr.push({ id: ((arr.length) ? arr[arr.length - 1].id + 1 : 0), value: val, done: false });
-        return arr;
+        return arr.concat({ id: ((arr.length) ? arr[arr.length - 1].id + 1 : 0), value: val, done: false });
     };
     // Input string validation.
     TodosService.prototype.inputValidation = function (value) {
@@ -106,19 +95,19 @@ var TodosService = (function () {
         }
     };
     // Edit to do item event handler.
-    TodosService.prototype.edit = function (el, index, value, arr, userId) {
+    TodosService.prototype.edit = function (el, index, value, arr, lSName, userId) {
         if (this.inputValidation(value)) {
             arr[index].value = value;
-            this.setLocalStorage(arr, userId);
+            this.setLocalStorage(arr, lSName, userId);
             this.hideEl(el);
             return true;
         }
         return false;
     };
     // App. states handler
-    TodosService.prototype.changeStates = function (arr, userId) {
+    TodosService.prototype.changeStates = function (arr, lSName, userId) {
         var isChecked, hide, isHidden, quantityTodos;
-        this.setLocalStorage(arr, userId);
+        this.setLocalStorage(arr, lSName, userId);
         isChecked = this.matchAllAndDone(arr);
         quantityTodos = arr.length;
         if (arr.length === 0) {
@@ -157,15 +146,12 @@ var TodosService = (function () {
         if (todoState === false) {
             if (ev.target.children[2]) {
                 if (window.getComputedStyle(ev.target.children[2], null).getPropertyValue("height") === '0px') {
-                    ev.target.children[2].style.height = this.inputFieldHeight;
+                    ev.target.children[2].style.height = '75px';
                 }
                 else {
                     ev.target.children[2].style.height = '0';
                 }
             }
-        }
-        else {
-            return false;
         }
     };
     // Hide edit field of to do item by 'keyup.escape' event.
@@ -180,11 +166,10 @@ var TodosService = (function () {
         targetEl.classList.add('act');
     };
     TodosService = __decorate([
-        core_1.Injectable(),
-        __param(0, core_1.Inject(error_handler_service_1.ErrorHandlerService)), 
-        __metadata('design:paramtypes', [error_handler_service_1.ErrorHandlerService])
+        Injectable(),
+        __param(0, Inject(ErrorHandlerService)), 
+        __metadata('design:paramtypes', [ErrorHandlerService])
     ], TodosService);
     return TodosService;
 }());
-exports.TodosService = TodosService;
 //# sourceMappingURL=todos.service.js.map

@@ -1,10 +1,7 @@
-"use strict";
-var core_1 = require('@angular/core');
-// The browser platform with a compiler
-var platform_browser_dynamic_1 = require('@angular/platform-browser-dynamic');
-// The app module
-var app_module_1 = require("./app.module");
-core_1.enableProdMode();
+import { enableProdMode } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { AppModule } from "./app.module";
+enableProdMode();
 // Compile and launch the module
-platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1.AppModule);
+platformBrowserDynamic().bootstrapModule(AppModule);
 //# sourceMappingURL=main.js.map

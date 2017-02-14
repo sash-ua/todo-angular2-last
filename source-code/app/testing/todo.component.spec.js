@@ -1,13 +1,9 @@
-//Copyright (c) 2016 Alex Tranchenko. All rights reserved.
-//MIT License.
-"use strict";
-var testing_1 = require('@angular/core/testing');
-var platform_browser_1 = require('@angular/platform-browser');
-var todo_component_1 = require("../todo/todo.component");
-var todos_service_1 = require("../services/todos.service/todos.service");
-var error_handler_service_1 = require("../services/error.handler.service/error.handler.service");
-// import {AppComponent} from "../AppComponent";
-var forms_1 = require("@angular/forms");
+import { async, inject, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { TodoComponent } from "../todo/todo.component";
+import { TodosService } from "../services/todos.service/todos.service";
+import { ErrorHandlerService } from "../services/error.handler.service/error.handler.service";
+import { FormsModule } from "@angular/forms";
 var fixture;
 var cmpnt;
 var de;
@@ -23,33 +19,34 @@ var AppComponentStub = {
     itemVisibility: false
 };
 var TodosServiceStub = {
-    listItems: [{ id: 0, value: "test", done: false }, { id: 1, value: "test", done: false }]
+    listItems: [{ id: 0, value: "test1", done: false }, { id: 1, value: "test2", done: false }]
 };
 describe('todos.component', function () {
-    beforeEach(testing_1.async(function () {
-        testing_1.TestBed.configureTestingModule({
+    beforeEach(async(function () {
+        TestBed.configureTestingModule({
             imports: [
-                forms_1.FormsModule
+                FormsModule
             ],
             declarations: [
-                todo_component_1.TodoComponent
+                TodoComponent
             ],
             providers: [
                 // {provide: TodosServiceStub, useValue: TodosServiceStub},
                 // {provide: AppComponent, useValue: AppComponentStub},
                 // {provide: ComponentFixtureAutoDetect, useValue: true},
-                error_handler_service_1.ErrorHandlerService,
-                todos_service_1.TodosService
+                ErrorHandlerService,
+                TodosService,
+                TodoComponent
             ]
         })
-            .compileComponents()
+            .compileComponents() // compile template and css
             .then(function () {
-            fixture = testing_1.TestBed.createComponent(todo_component_1.TodoComponent);
+            fixture = TestBed.createComponent(TodoComponent);
             cmpnt = fixture.componentInstance;
-            fixture.detectChanges(); // initial binding
-            delBtn = fixture.debugElement.query(platform_browser_1.By.css('button'));
-            delFirstLi = fixture.debugElement.query(platform_browser_1.By.css('.todos__item'));
-            todoService = fixture.debugElement.injector.get(todos_service_1.TodosService);
+            // fixture.detectChanges(); // initial binding
+            delBtn = fixture.debugElement.query(By.css('button'));
+            delFirstLi = fixture.debugElement.query(By.css('.todos__item'));
+            todoService = fixture.debugElement.injector.get(TodosService);
         });
         // creates an instance of TodoComponent to test and returns a fixture: ComponentFixture.
         // fixture = TestBed.createComponent(TodoComponent);
@@ -57,31 +54,20 @@ describe('todos.component', function () {
         // allTodo = fixture.debugElement.injector.get(AppComponent);
         // appComponent = TestBed.get(AppComponent);
     }));
-    it('1.1 method open.', testing_1.fakeAsync(function () {
-        testing_1.tick();
-        fixture.detectChanges();
-        // fixture.whenStable().then(() => {
-        var el = fixture.debugElement.query(platform_browser_1.By.css('.todos__item'));
-        expect(el).toBe('');
-        // expect(delBtn).toBe('');
-        // expect(delFirstLi).toBe('');
-        // let height = window.getComputedStyle(el, null).getPropertyValue("height");
-        // expect(height).toBe('20.8px');
-        // click(delFirstLi.nativeElement);
-        // fixture.detectChanges();
-        // height = window.getComputedStyle(el, null).getPropertyValue("height");
-        // expect(height).toBe('0px');
-        // });
-    }));
-    it('1.2 method checkTodo', function () {
-        // let input = fixture.debugElement.query(By.css('input'));
-        // todoService.listItems = [{id:0,value:"test",done:false}, {id:1,value:"test",done:false}];
-        // appComponent.userId = 'testUser';
-        // fixture.detectChanges();
-        // input.triggerEventHandler('change', input.nativeElement);
-        // expect(todoService).toBe('');
-        // expect(appComponent).toBe('');
-        // expect(input).toBe();
-    });
+    it('1.1 method checkTodo.', (inject([TodoComponent], function (service) {
+        var z = service.checkTodo(true, 1, [{ id: 0, value: "test", done: false }, { id: 1, value: "test", done: false }], 'qwert');
+        console.log(z);
+        // expect(service.checkTodo(true, 1, [{id:0,value:"test",done:false}, {id:1,value:"test",done:false}], 'qwert')).toBeFalsy();
+    })));
+    // it('1.2 method modWinDelHandler', () => {
+    // let input = fixture.debugElement.query(By.css('input'));
+    // todoService.listItems = [{id:0,value:"test",done:false}, {id:1,value:"test",done:false}];
+    // appComponent.userId = 'testUser';
+    // fixture.detectChanges();
+    // input.triggerEventHandler('change', input.nativeElement);
+    // expect(todoService).toBe('');
+    // expect(appComponent).toBe('');
+    // expect(input).toBe();
+    // });
 });
 //# sourceMappingURL=todo.component.spec.js.map

@@ -1,24 +1,16 @@
 import {Injectable, Inject} from '@angular/core';
 import {ErrorHandlerService} from "../error.handler.service/error.handler.service";
-import {ListItem} from "../../todo/list.item";
+import {ListItem} from "../../types/listItem/list.item";
 import {Observable} from "rxjs/Observable";
 import {firebaseConfig} from "../../app.module";
-import {AppStates} from "../../todo/app.states";
 
-//AOT
-// import {FB} from "../../app.module";
-// import {database, auth} from 'firebase';
-//AOT todo
 
-// JIT
-import firebase from 'firebase/app';
+import {FB as firebase} from "../../app.module";
 import 'firebase/database';
-// JIT
 
 @Injectable()
 export class TodosService{
     public lSName: string[] = ['todos', 'guest_todos', 'true', 'userId', `firebase:authUser:${firebaseConfig.apiKey}:[DEFAULT]`, 'Log In or Register', 'todos__item_todo'];
-    private inputFieldHeight: string = '75px';
     private errorH: any;
     private  id: number;
 
@@ -30,7 +22,6 @@ export class TodosService{
     // Get data from database.
     getData(userId: string): Promise<any> {
         return firebase.database().ref('/' + userId).once('value'); //JIT
-        // return FB.database().ref('/' + userId).once('value'); //AOT todo
     }
     // Create Observable from the object.
     createObs(obj: Object): Observable<Object> {
@@ -38,21 +29,23 @@ export class TodosService{
     }
     // Object to JSON string and vice versa
     jsonify(data: any): Array<any> {
-        return (typeof data === 'object') ? JSON.stringify(data) : (typeof data === 'string') ? JSON.parse(data) : new Error('jsonify Error');
+        return (typeof data === 'object') ? JSON.stringify(data) : (typeof data === 'string') ? JSON.parse(data) : this.errorH.handleError(new Error('jsonify Error'));
     }
     // Get LS by key
-    getLocalStorage(key: string): string {
-            return localStorage.getItem(key);
+    getLocalStorage(jsonify: Function): Object {
+        return (key: string): Object => {
+            return jsonify(localStorage.getItem(key));
+        }
     }
+
     // Save data to LS and/or database
-    setLocalStorage(arr: ListItem[], userId: string): void {
+    setLocalStorage(arr: ListItem[], lSName: string[], userId: string): void {
         let data = JSON.stringify(arr);
-        if(userId === this.lSName[1] || !userId){
-            localStorage.setItem(this.lSName[1], data);
+        if(userId === lSName[1] || !userId){
+            localStorage.setItem(lSName[1], data);
         } else {
-            localStorage.setItem(this.lSName[0], data);
+            localStorage.setItem(lSName[0], data);
             firebase.database().ref('/' + userId).set(data); //JIT
-            // FB.database().ref('/' + userId).set(data); //AOT todo
         }
     }
     // Clear LS
@@ -65,27 +58,20 @@ export class TodosService{
     simpleJsonObjValid(data: any): boolean{
         return (typeof (data) === 'object' && data !== null && data.length > 0);
     }
-    // App init. Get JSON object, then the validity check with simpleJsonObjValid(), save to localStorage, init. listItems,
-    // set id (index number of last to do item)
-    appInit(data: JSON, userId: string ): any[] {
-        let listItems: Array<any>,
-            init: boolean,
-            id: number,
-            savedObj: Array<any> = this.jsonify(data);
-        if(this.simpleJsonObjValid(savedObj)){
-            listItems = savedObj;
-            this.setLocalStorage(listItems, userId);
-            return [listItems, true];
+    // App init. Get JSON object, then the validity check with simpleJsonObjValid(), save to localStorage, init. listItems.
+    appInit(listItems: ListItem[], lSName: string[], userId: string): [ListItem[], boolean] {
+        let b: [ListItem[], boolean];
+        if(this.simpleJsonObjValid(listItems)){
+            b =  [listItems, true];
         } else {
-            listItems = [];
-            this.setLocalStorage(listItems, userId);
-            return [listItems, false];
+            b = [listItems = [], false];
         }
+        this.setLocalStorage(listItems, lSName, userId);
+        return b;
     }
     // Add item to array.
     addItem(val:any, arr: ListItem[]): ListItem[] {
-        arr.push({id: ((arr.length) ? arr[arr.length-1].id + 1 : 0), value: val, done: false});
-        return arr;
+        return arr.concat({id: ((arr.length) ? arr[arr.length-1].id + 1 : 0), value: val, done: false});
     }
     // Input string validation.
     inputValidation(value: string): boolean {
@@ -104,19 +90,19 @@ export class TodosService{
         }
     }
     // Edit to do item event handler.
-    edit(el: HTMLElement, index: number, value: string, arr: ListItem[], userId?: string): boolean {
+    edit(el: HTMLElement, index: number, value: string, arr: ListItem[], lSName: string[], userId?: string): boolean {
         if(this.inputValidation(value)){
             arr[index].value = value;
-            this.setLocalStorage(arr, userId);
+            this.setLocalStorage(arr, lSName, userId);
             this.hideEl(el);
             return true;
         }
         return false;
     }
     // App. states handler
-    changeStates(arr: ListItem[], userId?: string): Object {
+    changeStates(arr: ListItem[], lSName: string[], userId?: string): Object {
         let isChecked: boolean, hide: boolean, isHidden: boolean, quantityTodos: number;
-        this.setLocalStorage(arr, userId);
+        this.setLocalStorage(arr, lSName, userId);
         isChecked = this.matchAllAndDone(arr);
         quantityTodos = arr.length;
         if(arr.length === 0) {
@@ -152,13 +138,11 @@ export class TodosService{
         if(todoState === false) {
             if (ev.target.children[2]) {
                 if(window.getComputedStyle(ev.target.children[2],null).getPropertyValue("height") === '0px'){
-                    ev.target.children[2].style.height = this.inputFieldHeight;
+                    ev.target.children[2].style.height = '75px';
                 }else {
                     ev.target.children[2].style.height = '0';
                 }
             }
-        } else {
-            return false;
         }
     }
     // Hide edit field of to do item by 'keyup.escape' event.

@@ -1,8 +1,6 @@
-"use strict";
-var ListItem = (function () {
+export var ListItem = (function () {
     function ListItem() {
     }
     return ListItem;
 }());
-exports.ListItem = ListItem;
 //# sourceMappingURL=list.item.js.map

@@ -1,4 +1,5 @@
 import {Component, Output, EventEmitter, Input} from '@angular/core';
+import {RmOrNot} from "../../types/types";
 
 @Component({
     selector: 'm-w-del-all-done',
@@ -22,5 +23,5 @@ export class ModalWindowComponent {
     constructor() {}
 
     @Input('data-messages') message: string;
-    @Output() dataItemVisibility: EventEmitter<any> = new EventEmitter();
+    @Output() dataItemVisibility: EventEmitter<RmOrNot> = new EventEmitter();
 }

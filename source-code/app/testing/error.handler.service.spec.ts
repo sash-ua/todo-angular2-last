@@ -20,7 +20,7 @@ describe('error.handler.service', () => {
             });
     })));
     it('2.1 Method displayErrors', async(inject([ErrorHandlerService], (service: ErrorHandlerService) => {
-        let z = service.displayErrors({code: "auth/wrong-password", message: "The password is wrong. The password is wrong."});
+        let z = service.displayErrors({code: "auth/wrong-password", message: "The password is wrong."});
         expect(z).toEqual("The password is wrong.");
     })));
     it('2.2 Method displayErrors. ', async(inject([ErrorHandlerService], (service: ErrorHandlerService) => {

@@ -1,6 +1,3 @@
-//Copyright (c) 2016 Alex Tranchenko. All rights reserved.
-//MIT License.
-
 import {
     async, ComponentFixture, fakeAsync, inject, TestBed, tick, ComponentFixtureAutoDetect
 } from '@angular/core/testing';
@@ -28,7 +25,7 @@ let AppComponentStub = {
     itemVisibility: false
 };
 let TodosServiceStub = {
-    listItems: [{id:0,value:"test",done:false}, {id:1,value:"test",done:false}]
+    listItems: [{id:0,value:"test1",done:false}, {id:1,value:"test2",done:false}]
 };
 
 describe('todos.component', () => {
@@ -45,14 +42,15 @@ describe('todos.component', () => {
                 // {provide: AppComponent, useValue: AppComponentStub},
                 // {provide: ComponentFixtureAutoDetect, useValue: true},
                 ErrorHandlerService,
-                TodosService
+                TodosService,
+                TodoComponent
             ]
         })
-            .compileComponents()
+            .compileComponents() // compile template and css
             .then(() => {
                 fixture = TestBed.createComponent(TodoComponent);
                 cmpnt    = fixture.componentInstance;
-                fixture.detectChanges(); // initial binding
+                // fixture.detectChanges(); // initial binding
                 delBtn = fixture.debugElement.query(By.css('button'));
                 delFirstLi = fixture.debugElement.query(By.css('.todos__item'));
                 todoService = fixture.debugElement.injector.get(TodosService);
@@ -65,24 +63,12 @@ describe('todos.component', () => {
         // appComponent = TestBed.get(AppComponent);
 
     }));
-    it('1.1 method open.', fakeAsync(() => {
-        tick();
-        fixture.detectChanges();
-        // fixture.whenStable().then(() => {
-            let el = fixture.debugElement.query(By.css('.todos__item'));
-            expect(el).toBe('');
-            // expect(delBtn).toBe('');
-            // expect(delFirstLi).toBe('');
-            // let height = window.getComputedStyle(el, null).getPropertyValue("height");
-            // expect(height).toBe('20.8px');
-            // click(delFirstLi.nativeElement);
-            // fixture.detectChanges();
-            // height = window.getComputedStyle(el, null).getPropertyValue("height");
-            // expect(height).toBe('0px');
-
-        // });
-    }));
-    it('1.2 method checkTodo', () => {
+    it('1.1 method checkTodo.', (inject([TodoComponent], (service: TodoComponent)=>{
+        let z = service.checkTodo(true, 1, [{id:0,value:"test",done:false}, {id:1,value:"test",done:false}], 'qwert');
+        console.log(z);
+        // expect(service.checkTodo(true, 1, [{id:0,value:"test",done:false}, {id:1,value:"test",done:false}], 'qwert')).toBeFalsy();
+    })));
+    // it('1.2 method modWinDelHandler', () => {
         // let input = fixture.debugElement.query(By.css('input'));
         // todoService.listItems = [{id:0,value:"test",done:false}, {id:1,value:"test",done:false}];
         // appComponent.userId = 'testUser';
@@ -92,5 +78,5 @@ describe('todos.component', () => {
         // expect(todoService).toBe('');
         // expect(appComponent).toBe('');
         // expect(input).toBe();
-    });
+    // });
 });

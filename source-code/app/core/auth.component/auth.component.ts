@@ -94,7 +94,7 @@ export class AuthComponent {
     }
 
     @Input('data-logInBtn') logInBtn: string;
-    @Output() guestAccInit: EventEmitter<any> = new EventEmitter();
+    @Output() guestAccInit: EventEmitter<{guestAccInit: boolean}> = new EventEmitter();
 
     signIn(email: string, pass: string){
         this.authService.signIn(email, pass)

@@ -7,13 +7,7 @@ import {FormsModule} from "@angular/forms";
 import {MaterialModule} from "@angular/material";
 
 // DB
-//AOT
-// import * as firebase from 'firebase';
-//AOT todo
-
-// JIT
 import firebase from 'firebase/app';
-// JIT
 
 // components
 import {AppComponent} from "./AppComponent";
@@ -27,7 +21,7 @@ import {SharedModule} from "./shared/shared.module";
 import {TodosService} from "./services/todos.service/todos.service";
 import {AuthService} from "./services/auth/auth.service";
 import {ErrorHandlerService} from "./services/error.handler.service/error.handler.service";
-import {ListItem} from "./todo/list.item";
+import {ListItem} from "./types/listItem/list.item";
 
 export const firebaseConfig = {
     apiKey: 'AIzaSyBFLWRbb4VXqoh_UXMA_wSwwzqwPyxmwDw',
@@ -35,13 +29,8 @@ export const firebaseConfig = {
     databaseURL: 'https://todos-59dad.firebaseio.com',
     storageBucket: 'todos-59dad.appspot.com',
 };
-// JIT
-firebase.initializeApp(firebaseConfig);
-// JIT
 
-//AOT
-// export  const FB = firebase.initializeApp(firebaseConfig);
-//AOT todo
+export  const FB = firebase.initializeApp(firebaseConfig);
 
 @NgModule({
     imports: [

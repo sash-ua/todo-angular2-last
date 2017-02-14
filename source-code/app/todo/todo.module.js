@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,37 +7,36 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var common_1 = require("@angular/common");
-var todo_component_1 = require("./todo.component");
-var forms_1 = require("@angular/forms");
-var todos_service_1 = require("../services/todos.service/todos.service");
-var shared_module_1 = require("../shared/shared.module");
-var TodoModule = (function () {
+import { NgModule } from '@angular/core';
+import { CommonModule } from "@angular/common";
+import { TodoComponent } from "./todo.component";
+import { FormsModule } from "@angular/forms";
+import { TodosService } from "../services/todos.service/todos.service";
+import { SharedModule } from "../shared/shared.module";
+export var TodoModule = (function () {
     function TodoModule() {
     }
     TodoModule = __decorate([
-        core_1.NgModule({
+        NgModule({
             imports: [
-                common_1.CommonModule,
-                forms_1.FormsModule,
-                shared_module_1.SharedModule
+                CommonModule,
+                FormsModule,
+                SharedModule
             ],
             exports: [
-                common_1.CommonModule,
-                forms_1.FormsModule,
-                todo_component_1.TodoComponent
+                CommonModule,
+                FormsModule,
+                TodoComponent
             ],
             declarations: [
-                todo_component_1.TodoComponent
+                TodoComponent
             ],
             providers: [
-                todos_service_1.TodosService
+                TodosService
             ],
         }), 
         __metadata('design:paramtypes', [])
     ], TodoModule);
     return TodoModule;
 }());
-exports.TodoModule = TodoModule;
 //# sourceMappingURL=todo.module.js.map

@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,27 +7,27 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var common_1 = require('@angular/common');
-var auth_component_1 = require("./auth.component/auth.component");
-var material_1 = require("@angular/material");
-var shared_module_1 = require("../shared/shared.module");
-var CoreModule = (function () {
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { AuthComponent } from "./auth.component/auth.component";
+import { MaterialModule, MdButtonModule } from "@angular/material";
+import { SharedModule } from "../shared/shared.module";
+export var CoreModule = (function () {
     function CoreModule() {
     }
     CoreModule = __decorate([
-        core_1.NgModule({
+        NgModule({
             imports: [
-                common_1.CommonModule,
-                material_1.MdButtonModule,
-                shared_module_1.SharedModule,
-                material_1.MaterialModule.forRoot()
+                CommonModule,
+                MdButtonModule,
+                SharedModule,
+                MaterialModule.forRoot()
             ],
             exports: [
-                auth_component_1.AuthComponent
+                AuthComponent
             ],
             declarations: [
-                auth_component_1.AuthComponent
+                AuthComponent
             ],
             providers: [],
         }), 
@@ -36,5 +35,4 @@ var CoreModule = (function () {
     ], CoreModule);
     return CoreModule;
 }());
-exports.CoreModule = CoreModule;
 //# sourceMappingURL=core.module.js.map

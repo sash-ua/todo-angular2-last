@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,31 +7,31 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require("@angular/core");
-var common_1 = require("@angular/common");
-var modal_window_component_1 = require("./modalWindow/modal-window.component");
-var forms_1 = require("@angular/forms");
-var cap_component_1 = require("./cap.component/cap.component");
-var m_w_alert_component_1 = require("./modalWindow/m-w-alert.component");
-var SharedModule = (function () {
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { ModalWindowComponent } from "./modalWindow/modal-window.component";
+import { FormsModule } from "@angular/forms";
+import { CapComponent } from "./cap.component/cap.component";
+import { MWAlertComponent } from "./modalWindow/m-w-alert.component";
+export var SharedModule = (function () {
     function SharedModule() {
     }
     SharedModule = __decorate([
-        core_1.NgModule({
+        NgModule({
             imports: [
-                common_1.CommonModule,
-                forms_1.FormsModule
+                CommonModule,
+                FormsModule
             ],
             exports: [
-                common_1.CommonModule,
-                modal_window_component_1.ModalWindowComponent,
-                cap_component_1.CapComponent,
-                m_w_alert_component_1.MWAlertComponent
+                CommonModule,
+                ModalWindowComponent,
+                CapComponent,
+                MWAlertComponent
             ],
             declarations: [
-                modal_window_component_1.ModalWindowComponent,
-                cap_component_1.CapComponent,
-                m_w_alert_component_1.MWAlertComponent
+                ModalWindowComponent,
+                CapComponent,
+                MWAlertComponent
             ],
             providers: [],
         }), 
@@ -40,5 +39,4 @@ var SharedModule = (function () {
     ], SharedModule);
     return SharedModule;
 }());
-exports.SharedModule = SharedModule;
 //# sourceMappingURL=shared.module.js.map

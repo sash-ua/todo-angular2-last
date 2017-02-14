@@ -1,27 +1,14 @@
 
 import {Injectable} from '@angular/core';
-
-//AOT
-// import {database, auth} from 'firebase';
-// import {FB} from "../../app.module";
-//AOT todo
-
-// JIT
-import firebase from 'firebase/app';
+// DB
+import {FB as firebase} from "../../app.module";
 import 'firebase/auth';
-// JIT
 
 @Injectable()
 export class AuthService {
     private auth: any;
     constructor() {
-        //JIT
         this.auth = firebase.auth();
-        // JIT
-
-        //AOT
-        // this.auth = FB.auth();
-        //AOT todo
     }
     signIn(email: string, pass: string): Promise<any>{
         return this.auth.createUserWithEmailAndPassword(email, pass);
