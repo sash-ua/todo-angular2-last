@@ -13,7 +13,7 @@ Cross-browser compatibility: latest versions of popular browsers.
 ## Get the Code
 
 ```
-git clone https://github.com/sash-ua/todo-angular2-v.3.1.0.git src
+git clone https://github.com/sash-ua/todo-angular2-last.git src
 cd src\source-code
 ```
 ```
