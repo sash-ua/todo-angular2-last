@@ -114,23 +114,23 @@ gulp.task('gzip', function(){
 });
 
 //Watcher's preset for 'dev'.
-gulp.task('watch', function(event, cb){
-    watch([path.watch.sass], function(event, cb) {
+gulp.task('watch', function(){
+    watch([path.watch.sass], function() {
         gulp.start('css');
     });
-    watch([path.watch.fonts], function(event, cb) {
+    watch([path.watch.fonts], function() {
         gulp.start('fonts');
     });
 });
 
-gulp.task('watch:aot', function(event, cb){
-    watch([path.watch.sass], function(event, cb) {
+gulp.task('watch:aot', function(){
+    watch([path.watch.sass], function() {
         gulp.start('css:aot');
     });
-    watch([path.watch.build], function(event, cb) {
+    watch([path.watch.build], function() {
         gulp.start('gzip');
     });
-    watch([path.watch.fonts], function(event, cb) {
+    watch([path.watch.fonts], function() {
         gulp.start('fonts');
     });
 });

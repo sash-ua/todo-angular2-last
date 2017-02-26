@@ -11,3 +11,4 @@ export type ReturnedStates = {listItems:ListItem[], isChecked?:boolean, hide:boo
 export type ModalWindowHandler = {itemVisibility: boolean, message: string, buffer: Object};
 export type ModalWindowStates = {itemVisibility: boolean, index: number, el: HTMLElement, userId: number, message: string};
 export type RmOrNot ={itemVisibility: boolean, rmDone?: boolean};
+export type AuthForm = {email: string, pass: string, isHiddenAuth?: string};

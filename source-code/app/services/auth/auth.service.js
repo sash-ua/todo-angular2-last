@@ -8,9 +8,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Injectable } from '@angular/core';
+// DB
 import { FB as firebase } from "../../app.module";
 import 'firebase/auth';
-export var AuthService = (function () {
+var AuthService = (function () {
     function AuthService() {
         this.auth = firebase.auth();
     }
@@ -23,10 +24,11 @@ export var AuthService = (function () {
     AuthService.prototype.logOut = function () {
         return this.auth.signOut();
     };
-    AuthService = __decorate([
-        Injectable(), 
-        __metadata('design:paramtypes', [])
-    ], AuthService);
     return AuthService;
 }());
+AuthService = __decorate([
+    Injectable(),
+    __metadata("design:paramtypes", [])
+], AuthService);
+export { AuthService };
 //# sourceMappingURL=auth.service.js.map

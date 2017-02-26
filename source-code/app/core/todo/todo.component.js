@@ -11,8 +11,8 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 import { Component, Inject, Input, Output, EventEmitter } from '@angular/core';
-import { TodosService } from "../services/todos.service/todos.service";
-export var TodoComponent = (function () {
+import { TodosService } from "../../services/todos.service/todos.service";
+var TodoComponent = (function () {
     function TodoComponent(todoService) {
         this.filter = true;
         this.filterId = true;
@@ -48,32 +48,33 @@ export var TodoComponent = (function () {
             this.eventDeleteObserver.emit(arr[0]);
         }
     };
-    __decorate([
-        Input('data-userid'), 
-        __metadata('design:type', String)
-    ], TodoComponent.prototype, "userId", void 0);
-    __decorate([
-        Input('data-todo-list'), 
-        __metadata('design:type', Array)
-    ], TodoComponent.prototype, "listItems", void 0);
-    __decorate([
-        Output(), 
-        __metadata('design:type', EventEmitter)
-    ], TodoComponent.prototype, "eventObserver", void 0);
-    __decorate([
-        Output(), 
-        __metadata('design:type', EventEmitter)
-    ], TodoComponent.prototype, "eventDeleteObserver", void 0);
-    TodoComponent = __decorate([
-        Component({
-            moduleId: module.id,
-            selector: 'all-todos',
-            templateUrl: 'todo.component.html',
-            providers: []
-        }),
-        __param(0, Inject(TodosService)), 
-        __metadata('design:paramtypes', [TodosService])
-    ], TodoComponent);
     return TodoComponent;
 }());
+__decorate([
+    Input('data-userid'),
+    __metadata("design:type", String)
+], TodoComponent.prototype, "userId", void 0);
+__decorate([
+    Input('data-todo-list'),
+    __metadata("design:type", Array)
+], TodoComponent.prototype, "listItems", void 0);
+__decorate([
+    Output(),
+    __metadata("design:type", EventEmitter)
+], TodoComponent.prototype, "eventObserver", void 0);
+__decorate([
+    Output(),
+    __metadata("design:type", EventEmitter)
+], TodoComponent.prototype, "eventDeleteObserver", void 0);
+TodoComponent = __decorate([
+    Component({
+        moduleId: module.id,
+        selector: 'all-todos',
+        templateUrl: 'todo.component.html',
+        providers: []
+    }),
+    __param(0, Inject(TodosService)),
+    __metadata("design:paramtypes", [TodosService])
+], TodoComponent);
+export { TodoComponent };
 //# sourceMappingURL=todo.component.js.map

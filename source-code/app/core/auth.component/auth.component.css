@@ -1,4 +1,3 @@
-
 .auth-window {
     -webkit-box-sizing : border-box;
     -moz-box-sizing    : border-box;
@@ -17,16 +16,9 @@
 }
 .auth-window__logout {
     margin : 10px;
+    vertical-align : middle;
 }
-.auth-window__btn:hover {
-    color : red;
-}
-.auth-window__input{
-    display : inline-block;
-    width : 80%;
-    margin : 10px;
-}
-.auth-window__sign-in {
+.auth-window__logout-name {
     background-color : #4CAF50;
     color : #ffffff;
 }
@@ -34,11 +26,4 @@
     position : absolute;
     top : 0;
     right : 1vw;
-    background-color : #fff;
 }
-.hidden__auth {
-    display : none;
-}
-/*.visible{*/
-    /*display : block;*/
-/*}*/

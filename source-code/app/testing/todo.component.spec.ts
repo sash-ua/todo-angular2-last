@@ -3,7 +3,7 @@ import {
 } from '@angular/core/testing';
 import {DebugElement} from "@angular/core";
 import { By } from '@angular/platform-browser';
-import {TodoComponent} from "../todo/todo.component";
+import {TodoComponent} from "../core/todo/todo.component";
 import {TodosService} from "../services/todos.service/todos.service";
 import {ErrorHandlerService} from "../services/error.handler.service/error.handler.service";
 // import {AppComponent} from "../AppComponent";

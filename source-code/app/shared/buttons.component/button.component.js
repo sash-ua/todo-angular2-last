@@ -7,18 +7,24 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component } from '@angular/core';
-var CapComponent = (function () {
-    function CapComponent() {
+import { Component, Input } from '@angular/core';
+var ButtonRaised = (function () {
+    function ButtonRaised() {
     }
-    return CapComponent;
+    return ButtonRaised;
 }());
-CapComponent = __decorate([
+__decorate([
+    Input('raised-button-name'),
+    __metadata("design:type", String)
+], ButtonRaised.prototype, "name", void 0);
+ButtonRaised = __decorate([
     Component({
-        selector: 'cap',
-        template: "<div class=\"wrapper__inactive\"></div>"
-    }),
-    __metadata("design:paramtypes", [])
-], CapComponent);
-export { CapComponent };
-//# sourceMappingURL=cap.component.js.map
+        selector: 'raised-button',
+        template: " <button md-raised-button class=\"r-brn\">{{ name }}</button>",
+        styles: [".r-brn {background-color: #e6e6e6;} .r-brn:hover {background-color: #cdcdcd;}"],
+    })
+], ButtonRaised);
+export { ButtonRaised };
+//Copyright (c) 2017 Alex Tranchenko. All rights reserved.
+//MIT License. 
+//# sourceMappingURL=button.component.js.map

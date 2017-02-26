@@ -1,3 +1,6 @@
+/**
+ * Created by Alex Tranchenko on 16.11.2016.
+ */
 import { async, inject, TestBed } from '@angular/core/testing';
 import { ErrorHandlerService } from "../services/error.handler.service/error.handler.service";
 describe('error.handler.service', function () {

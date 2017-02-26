@@ -8,32 +8,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component, Input, trigger, state, style, transition, animate } from '@angular/core';
-export var MWAlertComponent = (function () {
+var MWAlertComponent = (function () {
     function MWAlertComponent() {
     }
-    __decorate([
-        Input('data-id'), 
-        __metadata('design:type', String)
-    ], MWAlertComponent.prototype, "message", void 0);
-    __decorate([
-        Input('data-bind'), 
-        __metadata('design:type', String)
-    ], MWAlertComponent.prototype, "alerts", void 0);
-    MWAlertComponent = __decorate([
-        Component({
-            selector: 'm-w-alert',
-            template: "\n    <div [@openHide]=\"alerts\"  class=\"modal-window modal-window_alerts\">\n        <h4 class=\"modal-window__header\">{{this.message}}</h4>\n    </div>",
-            animations: [
-                trigger('openHide', [
-                    state('active', style({ height: 'auto', opacity: 1, padding: '8px' })),
-                    state('inactive', style({ height: '0%', opacity: 0, padding: 0 })),
-                    transition('* <=> *', [
-                        animate(300)
-                    ])])
-            ],
-        }), 
-        __metadata('design:paramtypes', [])
-    ], MWAlertComponent);
     return MWAlertComponent;
 }());
+__decorate([
+    Input('data-id'),
+    __metadata("design:type", String)
+], MWAlertComponent.prototype, "message", void 0);
+__decorate([
+    Input('data-bind'),
+    __metadata("design:type", String)
+], MWAlertComponent.prototype, "alerts", void 0);
+MWAlertComponent = __decorate([
+    Component({
+        selector: 'm-w-alert',
+        template: "\n    <div [@openHide]=\"alerts\"  class=\"modal-window modal-window_alerts\">\n        <h4 class=\"modal-window__header\">{{this.message}}</h4>\n    </div>",
+        animations: [
+            trigger('openHide', [
+                state('active', style({ height: 'auto', opacity: 1, padding: '8px' })),
+                state('inactive', style({ height: '0%', opacity: 0, padding: 0 })),
+                transition('* <=> *', [
+                    animate(300)
+                ])
+            ])
+        ],
+    }),
+    __metadata("design:paramtypes", [])
+], MWAlertComponent);
+export { MWAlertComponent };
 //# sourceMappingURL=m-w-alert.component.js.map

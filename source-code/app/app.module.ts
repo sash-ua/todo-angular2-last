@@ -14,7 +14,6 @@ import {AppComponent} from "./AppComponent";
 
 // modules
 import {CoreModule} from "./core/core.module";
-import {TodoModule} from "./todo/todo.module";
 import {SharedModule} from "./shared/shared.module";
 
 // services
@@ -37,12 +36,10 @@ export  const FB = firebase.initializeApp(firebaseConfig);
         BrowserModule,
         FormsModule,
         CoreModule,
-        TodoModule,
         SharedModule,
         MaterialModule.forRoot()
     ],
-    exports: [
-    ],
+    exports: [],
     declarations: [
         AppComponent
     ],

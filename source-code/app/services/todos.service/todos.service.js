@@ -16,9 +16,9 @@ import { Observable } from "rxjs/Observable";
 import { firebaseConfig } from "../../app.module";
 import { FB as firebase } from "../../app.module";
 import 'firebase/database';
-export var TodosService = (function () {
+var TodosService = (function () {
     function TodosService(errorH) {
-        this.lSName = ['todos', 'guest_todos', 'true', 'userId', ("firebase:authUser:" + firebaseConfig.apiKey + ":[DEFAULT]"), 'Log In or Register', 'todos__item_todo'];
+        this.lSName = ['todos', 'guest_todos', 'true', 'userId', "firebase:authUser:" + firebaseConfig.apiKey + ":[DEFAULT]", 'Log In or Register', 'todos__item_todo'];
         this.errorH = errorH;
     }
     // Get data from database.
@@ -83,12 +83,13 @@ export var TodosService = (function () {
     // Highlight to do item done/undone
     TodosService.prototype.highlightTodo = function (arr, state, id) {
         if (id === void 0) { id = null; }
+        var nArr = arr.slice();
         if (id || id === 0) {
-            arr[id].done = state;
-            return arr;
+            nArr[id].done = state;
+            return nArr;
         }
         else {
-            return arr.map(function (obj) {
+            return nArr.map(function (obj) {
                 obj.done = state;
                 return obj;
             });
@@ -158,18 +159,12 @@ export var TodosService = (function () {
     TodosService.prototype.hideEl = function (el) {
         el.parentNode.style.height = 0;
     };
-    // Highlite filter's button when it clicked.
-    TodosService.prototype.hightlightFilter = function (targetEl, selector) {
-        document.querySelectorAll(selector).forEach(function (el, idx, arr) {
-            el.classList.remove('act');
-        });
-        targetEl.classList.add('act');
-    };
-    TodosService = __decorate([
-        Injectable(),
-        __param(0, Inject(ErrorHandlerService)), 
-        __metadata('design:paramtypes', [ErrorHandlerService])
-    ], TodosService);
     return TodosService;
 }());
+TodosService = __decorate([
+    Injectable(),
+    __param(0, Inject(ErrorHandlerService)),
+    __metadata("design:paramtypes", [ErrorHandlerService])
+], TodosService);
+export { TodosService };
 //# sourceMappingURL=todos.service.js.map

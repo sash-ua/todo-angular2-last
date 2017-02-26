@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/observable/throw';
-export var ErrorHandlerService = (function () {
+var ErrorHandlerService = (function () {
     function ErrorHandlerService() {
     }
     ErrorHandlerService.prototype.handleError = function (error) {
@@ -36,10 +36,11 @@ export var ErrorHandlerService = (function () {
             return (errorMessage);
         }
     };
-    ErrorHandlerService = __decorate([
-        Injectable(), 
-        __metadata('design:paramtypes', [])
-    ], ErrorHandlerService);
     return ErrorHandlerService;
 }());
+ErrorHandlerService = __decorate([
+    Injectable(),
+    __metadata("design:paramtypes", [])
+], ErrorHandlerService);
+export { ErrorHandlerService };
 //# sourceMappingURL=error.handler.service.js.map

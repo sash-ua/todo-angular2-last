@@ -1,6 +1,7 @@
 import {Component, Inject, Input, Output, EventEmitter} from '@angular/core';
-import {TodosService} from "../services/todos.service/todos.service";
-import {ListItem} from "../types/listItem/list.item";
+import {TodosService} from "../../services/todos.service/todos.service";
+import {ListItem} from "../../types/listItem/list.item";
+
 
 @Component({
     moduleId: module.id,

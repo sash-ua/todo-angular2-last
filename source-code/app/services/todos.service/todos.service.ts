@@ -2,9 +2,8 @@ import {Injectable, Inject} from '@angular/core';
 import {ErrorHandlerService} from "../error.handler.service/error.handler.service";
 import {ListItem} from "../../types/listItem/list.item";
 import {Observable} from "rxjs/Observable";
+
 import {firebaseConfig} from "../../app.module";
-
-
 import {FB as firebase} from "../../app.module";
 import 'firebase/database';
 
@@ -79,11 +78,12 @@ export class TodosService{
     }
     // Highlight to do item done/undone
     highlightTodo(arr: ListItem[], state: boolean, id: number = null): ListItem[] {
+        let nArr = arr.slice();
         if(id || id === 0){
-            arr[id].done = state;
-            return arr;
+            nArr[id].done = state;
+            return nArr;
         } else {
-            return arr.map((obj)=>{
+            return nArr.map((obj)=>{
                 obj.done = state;
                 return obj;
             });
@@ -148,12 +148,5 @@ export class TodosService{
     // Hide edit field of to do item by 'keyup.escape' event.
     hideEl(el: HTMLElement): void {
         el.parentNode.style.height = 0;
-    }
-    // Highlite filter's button when it clicked.
-    hightlightFilter(targetEl: any, selector: string): void {
-        document.querySelectorAll(selector).forEach((el, idx, arr) => {
-            el.classList.remove('act');
-        });
-        targetEl.classList.add('act');
     }
 }
