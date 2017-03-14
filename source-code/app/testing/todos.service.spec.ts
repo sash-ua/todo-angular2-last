@@ -39,7 +39,7 @@ let elWithChildren: HTMLElement;
     </div>`
 })
 export class TestHtmlComponents {
-    constructor(private tds: TodosService, private auth: AuthService){}
+    constructor(private tds: TodosService){}
     f1(iserId: string) {
         return this.tds.getData(iserId);
     }
