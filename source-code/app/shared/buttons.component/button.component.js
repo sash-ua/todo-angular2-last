@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7,24 +8,42 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, Input } from '@angular/core';
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
 var ButtonRaised = (function () {
     function ButtonRaised() {
     }
     return ButtonRaised;
 }());
 __decorate([
-    Input('raised-button-name'),
+    core_1.Input('raised-button-name'),
     __metadata("design:type", String)
 ], ButtonRaised.prototype, "name", void 0);
 ButtonRaised = __decorate([
-    Component({
+    core_1.Component({
         selector: 'raised-button',
         template: " <button md-raised-button class=\"r-brn\">{{ name }}</button>",
         styles: [".r-brn {background-color: #e6e6e6;} .r-brn:hover {background-color: #cdcdcd;}"],
     })
 ], ButtonRaised);
-export { ButtonRaised };
+exports.ButtonRaised = ButtonRaised;
+var ButtonFlat = (function () {
+    function ButtonFlat() {
+    }
+    return ButtonFlat;
+}());
+__decorate([
+    core_1.Input('raised-button-name'),
+    __metadata("design:type", String)
+], ButtonFlat.prototype, "name", void 0);
+ButtonFlat = __decorate([
+    core_1.Component({
+        selector: 'flat-button',
+        template: " <button md-button class=\"r-brn\">{{ name }}</button>",
+        styles: [".r-brn {background-color: #e6e6e6;} .r-brn:hover {background-color: #cdcdcd;}"],
+    })
+], ButtonFlat);
+exports.ButtonFlat = ButtonFlat;
 //Copyright (c) 2017 Alex Tranchenko. All rights reserved.
 //MIT License. 
 //# sourceMappingURL=button.component.js.map

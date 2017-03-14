@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7,30 +8,31 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
 var AuthFormComponent = (function () {
     function AuthFormComponent() {
-        this.authEvent = new EventEmitter();
+        this.authEvent = new core_1.EventEmitter();
     }
     return AuthFormComponent;
 }());
 __decorate([
-    Input('auth-form-name'),
+    core_1.Input('auth-form-name'),
     __metadata("design:type", String)
 ], AuthFormComponent.prototype, "name", void 0);
 __decorate([
-    Output(),
-    __metadata("design:type", EventEmitter)
+    core_1.Output(),
+    __metadata("design:type", core_1.EventEmitter)
 ], AuthFormComponent.prototype, "authEvent", void 0);
 AuthFormComponent = __decorate([
-    Component({
+    core_1.Component({
         moduleId: module.id,
         selector: 'auth-form',
         styleUrls: ['auth-form.component.css'],
-        template: "\n    <md-toolbar class=\"auth-form__name\">{{ name }}</md-toolbar>\n    <md-card-content class=\"auth-form__cntnt\">\n        <form name=\"name\">\n            <div>\n                <md-input #si_email (keyup.enter)=\"authEvent.emit({email: si_email.value, pass:si_pass.value}); si_pass.value='';\"\n                    type=\"email\" class=\"auth-form__input\" placeholder=\"Email\">{{ si_email.value }}</md-input>\n                <md-input #si_pass (keyup.enter)=\"authEvent.emit({email: si_email.value, pass:si_pass.value}); si_pass.value='';\"\n                    type=\"password\" class=\"auth-form__input\" placeholder=\"Password\"></md-input>\n            </div>\n        </form>\n        <md-card-actions>\n            <raised-button [raised-button-name]=\"name\"\n                (click)=\"authEvent.emit({email: si_email.value, pass:si_pass.value}); si_pass.value='';\"></raised-button>\n            <raised-button [raised-button-name]=\"'Cancel'\"\n                (click)=\"authEvent.emit({isHiddenAuth: 'inactive'}); si_email.value=''; si_pass.value='';\"></raised-button>\n        </md-card-actions>\n    </md-card-content>"
+        template: "\n    <md-toolbar class=\"auth-form__name\">{{ name }}</md-toolbar>\n    <md-card-content class=\"auth-form__cntnt\">\n        <form name=\"name\">\n            <div>\n                <md-input #si_email (keyup.enter)=\"authEvent.emit({email: si_email.value, pass:si_pass.value}); si_pass.value='';\"\n                    type=\"email\" class=\"auth-form__input\" placeholder=\"Email\">{{ si_email.value }}</md-input>\n                <md-input #si_pass (keyup.enter)=\"authEvent.emit({email: si_email.value, pass:si_pass.value}); si_pass.value='';\"\n                    type=\"password\" class=\"auth-form__input\" placeholder=\"Password\"></md-input>\n            </div>\n        </form>\n        <md-card-actions>\n            <raised-button [raised-button-name]=\"name\"\n                (click)=\"authEvent.emit({email: si_email.value, pass:si_pass.value}); si_pass.value='';\"></raised-button>\n            <flat-button [raised-button-name]=\"'Cancel'\"\n                (click)=\"authEvent.emit({isHiddenAuth: 'inactive'}); si_email.value=''; si_pass.value='';\"></flat-button>\n        </md-card-actions>\n    </md-card-content>"
     })
 ], AuthFormComponent);
-export { AuthFormComponent };
+exports.AuthFormComponent = AuthFormComponent;
 //Copyright (c) 2017 Alex Tranchenko. All rights reserved.
 //MIT License. 
 //# sourceMappingURL=auth-form.component.js.map

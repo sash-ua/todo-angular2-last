@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,15 +11,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { Component, trigger, state, style, transition, animate, Inject, Output, EventEmitter, Input } from '@angular/core';
-import { AuthService } from "../../services/auth/auth.service";
-import { ErrorHandlerService } from "../../services/error.handler.service/error.handler.service";
-import { TodosService } from "../../services/todos.service/todos.service";
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var auth_service_1 = require("../../services/auth/auth.service");
+var error_handler_service_1 = require("../../services/error.handler.service/error.handler.service");
+var todos_service_1 = require("../../services/todos.service/todos.service");
 var AuthComponent = (function () {
     function AuthComponent(todoService, authService, errorH) {
         this.isHiddenAuth = 'inactive';
         this.alerts = 'inactive';
-        this.guestAccInit = new EventEmitter();
+        this.guestAccInit = new core_1.EventEmitter();
         this.authService = authService;
         this.todoService = todoService;
         this.errorH = errorH;
@@ -87,36 +89,36 @@ var AuthComponent = (function () {
     return AuthComponent;
 }());
 __decorate([
-    Input('data-logInBtn'),
+    core_1.Input('data-logInBtn'),
     __metadata("design:type", String)
 ], AuthComponent.prototype, "logInBtn", void 0);
 __decorate([
-    Output(),
-    __metadata("design:type", EventEmitter)
+    core_1.Output(),
+    __metadata("design:type", core_1.EventEmitter)
 ], AuthComponent.prototype, "guestAccInit", void 0);
 AuthComponent = __decorate([
-    Component({
+    core_1.Component({
         moduleId: module.id,
         selector: 'auth-wndw',
         styleUrls: ['auth.component.css'],
-        template: "\n    <cap [style.display]=\"isHiddenAuth === 'active' ? 'block' : 'none'\"></cap>\n    <raised-button [raised-button-name]=\"this.logInBtn\" (click)=\"isHiddenAuth === 'active' ? isHiddenAuth = 'inactive' : isHiddenAuth = 'active';\" class=\"reg-btn\"></raised-button>\n    <md-card id=\"auth-window\" class=\"auth-window wrapper\"\n            (keyup.escape)=\"isHiddenAuth = 'inactive'; $event.stopPropagation();\"\n            [@openHide]=\"isHiddenAuth\">\n        <auth-form [auth-form-name]=\"'SignIn'\" (authEvent)=\"signIn($event)\"></auth-form>\n        <auth-form [auth-form-name]=\"'LogIn'\" (authEvent)=\"logIn($event)\"></auth-form>\n        <md-toolbar class=\"auth-window__logout-name\">LogOut</md-toolbar>\n        <md-card-content class=\"auth-window__logout\">\n                <raised-button [raised-button-name]=\"'Log Out'\" (click)=\"logOut();\"></raised-button>\n        </md-card-content>\n    </md-card>\n    <m-w-alert [data-id]=\"this.message\" [data-bind]=\"alerts\" class=\"m-w-alert\"></m-w-alert>\n    ",
+        template: "\n    <cap [style.display]=\"isHiddenAuth === 'active' ? 'block' : 'none'\"></cap>\n    <flat-button [raised-button-name]=\"this.logInBtn\" (click)=\"isHiddenAuth === 'active' ? isHiddenAuth = 'inactive' : isHiddenAuth = 'active';\" class=\"reg-btn\"></flat-button>\n    <md-card id=\"auth-window\" class=\"auth-window wrapper\"\n            (keyup.escape)=\"isHiddenAuth = 'inactive'; $event.stopPropagation();\"\n            [@openHide]=\"isHiddenAuth\">\n        <auth-form [auth-form-name]=\"'SignIn'\" (authEvent)=\"signIn($event)\"></auth-form>\n        <auth-form [auth-form-name]=\"'LogIn'\" (authEvent)=\"logIn($event)\"></auth-form>\n        <md-toolbar class=\"auth-window__logout-name\">LogOut</md-toolbar>\n        <md-card-content class=\"auth-window__logout\">\n                <flat-button [raised-button-name]=\"'Log Out'\" (click)=\"logOut();\"></flat-button>\n        </md-card-content>\n    </md-card>\n    <m-w-alert [data-id]=\"this.message\" [data-bind]=\"alerts\" class=\"m-w-alert\"></m-w-alert>\n    ",
         animations: [
-            trigger('openHide', [
-                state('active', style({ height: '595px', opacity: 1 })),
-                state('inactive', style({ height: 0, transform: 'translateX(100%)' })),
-                transition('* <=> *', [
-                    animate(300)
+            core_1.trigger('openHide', [
+                core_1.state('active', core_1.style({ height: '595px', opacity: 1 })),
+                core_1.state('inactive', core_1.style({ height: 0, transform: 'translateX(150%)' })),
+                core_1.transition('* <=> *', [
+                    core_1.animate(350)
                 ])
             ])
         ],
-        providers: [AuthService]
+        providers: [auth_service_1.AuthService]
     }),
-    __param(0, Inject(TodosService)),
-    __param(1, Inject(AuthService)),
-    __param(2, Inject(ErrorHandlerService)),
-    __metadata("design:paramtypes", [TodosService,
-        AuthService,
-        ErrorHandlerService])
+    __param(0, core_1.Inject(todos_service_1.TodosService)),
+    __param(1, core_1.Inject(auth_service_1.AuthService)),
+    __param(2, core_1.Inject(error_handler_service_1.ErrorHandlerService)),
+    __metadata("design:paramtypes", [todos_service_1.TodosService,
+        auth_service_1.AuthService,
+        error_handler_service_1.ErrorHandlerService])
 ], AuthComponent);
-export { AuthComponent };
+exports.AuthComponent = AuthComponent;
 //# sourceMappingURL=auth.component.js.map

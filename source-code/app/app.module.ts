@@ -1,6 +1,6 @@
 
 import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
+import {BrowserModule, HAMMER_GESTURE_CONFIG} from '@angular/platform-browser';
 import {FormsModule} from "@angular/forms";
 
 // ui
@@ -21,6 +21,7 @@ import {TodosService} from "./services/todos.service/todos.service";
 import {AuthService} from "./services/auth/auth.service";
 import {ErrorHandlerService} from "./services/error.handler.service/error.handler.service";
 import {ListItem} from "./types/listItem/list.item";
+import {HammerConfig} from "./configs/hammerjs.config";
 
 export const firebaseConfig = {
     apiKey: 'AIzaSyBFLWRbb4VXqoh_UXMA_wSwwzqwPyxmwDw',
@@ -47,7 +48,8 @@ export  const FB = firebase.initializeApp(firebaseConfig);
         TodosService,
         ErrorHandlerService,
         ListItem,
-        AuthService
+        AuthService,
+        { provide: HAMMER_GESTURE_CONFIG, useClass: HammerConfig }
     ],
     bootstrap: [AppComponent],
 })
