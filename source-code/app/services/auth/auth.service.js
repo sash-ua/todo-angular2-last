@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,14 +7,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
+import { Injectable } from '@angular/core';
 // DB
-var app_module_1 = require("../../app.module");
-require("firebase/auth");
+import { FB as firebase } from "../../app.module";
+import 'firebase/auth';
 var AuthService = (function () {
     function AuthService() {
-        this.auth = app_module_1.FB.auth();
+        this.auth = firebase.auth();
     }
     AuthService.prototype.signIn = function (email, pass) {
         return this.auth.createUserWithEmailAndPassword(email, pass);
@@ -29,8 +27,8 @@ var AuthService = (function () {
     return AuthService;
 }());
 AuthService = __decorate([
-    core_1.Injectable(),
+    Injectable(),
     __metadata("design:paramtypes", [])
 ], AuthService);
-exports.AuthService = AuthService;
+export { AuthService };
 //# sourceMappingURL=auth.service.js.map

@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11,42 +10,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var error_handler_service_1 = require("../error.handler.service/error.handler.service");
-var Observable_1 = require("rxjs/Observable");
-var app_module_1 = require("../../app.module");
-var app_module_2 = require("../../app.module");
-require("firebase/database");
+import { Injectable, Inject } from '@angular/core';
+import { ErrorHandlerService } from "../error.handler.service/error.handler.service";
+import { Observable } from "rxjs/Observable";
+import { firebaseConfig } from "../../app.module";
+import { FB as firebase } from "../../app.module";
+import 'firebase/database';
 var TodosService = (function () {
     function TodosService(errorH) {
-        this.lSName = ['todos', 'guest_todos', 'true', 'userId', "firebase:authUser:" + app_module_1.firebaseConfig.apiKey + ":[DEFAULT]",
-            'Log In or Register', 'todos__item_todo'];
+        this.lSName = ['todos', 'guest_todos', 'true', 'userId', "firebase:authUser:" + firebaseConfig.apiKey + ":[DEFAULT]", 'Log In or Register', 'todos__item_todo'];
         this.errorH = errorH;
     }
     // Get data from database.
     TodosService.prototype.getData = function (userId) {
-        return app_module_2.FB.database().ref('/' + userId).once('value');
-    };
-    TodosService.prototype.setData = function (data, userId) {
-        return app_module_2.FB.database().ref('/' + userId).set(data);
+        return firebase.database().ref('/' + userId).once('value'); //JIT
     };
     // Create Observable from the object.
     TodosService.prototype.createObs = function (obj) {
-        return Observable_1.Observable.create(function (obs) { return obs.next(obj); });
+        return Observable.create(function (obs) { return obs.next(obj); });
     };
     // Object to JSON string and vice versa
     TodosService.prototype.jsonify = function (data) {
-        return (typeof data === 'object') ?
-            JSON.stringify(data) :
-            (typeof data === 'string') ?
-                JSON.parse(data) :
-                this.errorH.handleError(new Error('jsonify Error'));
+        return (typeof data === 'object') ? JSON.stringify(data) : (typeof data === 'string') ? JSON.parse(data) : this.errorH.handleError(new Error('jsonify Error'));
     };
     // Get LS by key
-    TodosService.prototype.getLocalStorage = function (fn) {
+    TodosService.prototype.getLocalStorage = function (jsonify) {
         return function (key) {
-            return fn(localStorage.getItem(key));
+            return jsonify(localStorage.getItem(key));
         };
     };
     // Save data to LS and/or database
@@ -57,7 +47,7 @@ var TodosService = (function () {
         }
         else {
             localStorage.setItem(lSName[0], data);
-            this.setData(data, userId);
+            firebase.database().ref('/' + userId).set(data); //JIT
         }
     };
     // Clear LS
@@ -70,8 +60,7 @@ var TodosService = (function () {
     TodosService.prototype.simpleJsonObjValid = function (data) {
         return (typeof (data) === 'object' && data !== null && data.length > 0);
     };
-    // App init. Get object, then the validity check with simpleJsonObjValid(), save to localStorage, init. listItems
-    //  by return object.
+    // App init. Get JSON object, then the validity check with simpleJsonObjValid(), save to localStorage, init. listItems.
     TodosService.prototype.appInit = function (listItems, lSName, userId) {
         var b;
         if (this.simpleJsonObjValid(listItems)) {
@@ -170,16 +159,12 @@ var TodosService = (function () {
     TodosService.prototype.hideEl = function (el) {
         el.parentNode.style.height = 0;
     };
-    // Produce string with first 15 letters ot given string
-    TodosService.prototype.cutter = function (str) {
-        return str.length > 15 ? str.slice(0, 15) + "..." : str.slice();
-    };
     return TodosService;
 }());
 TodosService = __decorate([
-    core_1.Injectable(),
-    __param(0, core_1.Inject(error_handler_service_1.ErrorHandlerService)),
-    __metadata("design:paramtypes", [error_handler_service_1.ErrorHandlerService])
+    Injectable(),
+    __param(0, Inject(ErrorHandlerService)),
+    __metadata("design:paramtypes", [ErrorHandlerService])
 ], TodosService);
-exports.TodosService = TodosService;
+export { TodosService };
 //# sourceMappingURL=todos.service.js.map

@@ -9,8 +9,7 @@ import 'firebase/database';
 
 @Injectable()
 export class TodosService{
-    public lSName: string[] = ['todos', 'guest_todos', 'true', 'userId', `firebase:authUser:${firebaseConfig.apiKey}:[DEFAULT]`,
-        'Log In or Register', 'todos__item_todo'];
+    public lSName: string[] = ['todos', 'guest_todos', 'true', 'userId', `firebase:authUser:${firebaseConfig.apiKey}:[DEFAULT]`, 'Log In or Register', 'todos__item_todo'];
     private errorH: any;
     private  id: number;
 
@@ -21,10 +20,7 @@ export class TodosService{
     }
     // Get data from database.
     getData(userId: string): Promise<any> {
-        return firebase.database().ref('/' + userId).once('value');
-    }
-    setData(data: JSON, userId: string): Promise<any> {
-        return firebase.database().ref('/' + userId).set(data);
+        return firebase.database().ref('/' + userId).once('value'); //JIT
     }
     // Create Observable from the object.
     createObs(obj: Object): Observable<Object> {
@@ -32,26 +28,23 @@ export class TodosService{
     }
     // Object to JSON string and vice versa
     jsonify(data: any): Array<any> {
-        return (typeof data === 'object') ?
-            JSON.stringify(data) :
-            (typeof data === 'string') ?
-                JSON.parse(data) :
-                this.errorH.handleError(new Error('jsonify Error'));
+        return (typeof data === 'object') ? JSON.stringify(data) : (typeof data === 'string') ? JSON.parse(data) : this.errorH.handleError(new Error('jsonify Error'));
     }
     // Get LS by key
-    getLocalStorage(fn: Function): Object {
+    getLocalStorage(jsonify: Function): Object {
         return (key: string): Object => {
-            return fn(localStorage.getItem(key));
+            return jsonify(localStorage.getItem(key));
         }
     }
+
     // Save data to LS and/or database
-    setLocalStorage(arr: ListItem[], lSName: string[], userId?: string): void {
-        let data: JSON = JSON.stringify(arr);
+    setLocalStorage(arr: ListItem[], lSName: string[], userId: string): void {
+        let data = JSON.stringify(arr);
         if(userId === lSName[1] || !userId){
             localStorage.setItem(lSName[1], data);
         } else {
             localStorage.setItem(lSName[0], data);
-            this.setData(data, userId);
+            firebase.database().ref('/' + userId).set(data); //JIT
         }
     }
     // Clear LS
@@ -64,8 +57,7 @@ export class TodosService{
     simpleJsonObjValid(data: any): boolean{
         return (typeof (data) === 'object' && data !== null && data.length > 0);
     }
-    // App init. Get object, then the validity check with simpleJsonObjValid(), save to localStorage, init. listItems
-    //  by return object.
+    // App init. Get JSON object, then the validity check with simpleJsonObjValid(), save to localStorage, init. listItems.
     appInit(listItems: ListItem[], lSName: string[], userId: string): [ListItem[], boolean] {
         let b: [ListItem[], boolean];
         if(this.simpleJsonObjValid(listItems)){
@@ -142,7 +134,7 @@ export class TodosService{
         return (t == l);
     }
     // Open / close editable to do item.
-    openCloseEditable(ev:   Event, todoState: boolean = false): void {
+    openCloseEditable(ev:   Event, todoState: boolean = false): boolean {
         if(todoState === false) {
             if (ev.target.children[2]) {
                 if(window.getComputedStyle(ev.target.children[2],null).getPropertyValue("height") === '0px'){
@@ -156,9 +148,5 @@ export class TodosService{
     // Hide edit field of to do item by 'keyup.escape' event.
     hideEl(el: HTMLElement): void {
         el.parentNode.style.height = 0;
-    }
-    // Produce string with first 15 letters ot given string
-    cutter(str: string): string {
-        return str.length > 15 ? `${str.slice(0, 15)}...` : str.slice();
     }
 }

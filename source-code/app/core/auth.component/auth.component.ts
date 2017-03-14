@@ -15,14 +15,13 @@ import {ErrorHandlerService} from "../../services/error.handler.service/error.ha
 import {TodosService} from "../../services/todos.service/todos.service";
 import {AuthForm} from "../../types/types";
 
-
 @Component({
     moduleId: module.id,
     selector: 'auth-wndw',
     styleUrls:['auth.component.css'],
     template: `
     <cap [style.display]="isHiddenAuth === 'active' ? 'block' : 'none'"></cap>
-    <flat-button [raised-button-name]="this.logInBtn" (click)="isHiddenAuth === 'active' ? isHiddenAuth = 'inactive' : isHiddenAuth = 'active';" class="reg-btn"></flat-button>
+    <raised-button [raised-button-name]="this.logInBtn" (click)="isHiddenAuth === 'active' ? isHiddenAuth = 'inactive' : isHiddenAuth = 'active';" class="reg-btn"></raised-button>
     <md-card id="auth-window" class="auth-window wrapper"
             (keyup.escape)="isHiddenAuth = 'inactive'; $event.stopPropagation();"
             [@openHide]="isHiddenAuth">
@@ -30,7 +29,7 @@ import {AuthForm} from "../../types/types";
         <auth-form [auth-form-name]="'LogIn'" (authEvent)="logIn($event)"></auth-form>
         <md-toolbar class="auth-window__logout-name">LogOut</md-toolbar>
         <md-card-content class="auth-window__logout">
-                <flat-button [raised-button-name]="'Log Out'" (click)="logOut();"></flat-button>
+                <raised-button [raised-button-name]="'Log Out'" (click)="logOut();"></raised-button>
         </md-card-content>
     </md-card>
     <m-w-alert [data-id]="this.message" [data-bind]="alerts" class="m-w-alert"></m-w-alert>
@@ -38,9 +37,9 @@ import {AuthForm} from "../../types/types";
     animations: [
         trigger('openHide',[
             state('active', style({height: '595px', opacity: 1})),
-            state('inactive', style({height: 0, transform: 'translateX(150%)'})),
+            state('inactive', style({height: 0, transform: 'translateX(100%)'})),
             transition('* <=> *', [
-                animate(350)
+                animate(300)
             ])])
     ],
     providers: [AuthService]

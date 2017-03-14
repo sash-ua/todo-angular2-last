@@ -1,7 +1,7 @@
 import {Component, Inject, Input, Output, EventEmitter} from '@angular/core';
 import {TodosService} from "../../services/todos.service/todos.service";
 import {ListItem} from "../../types/listItem/list.item";
-import "hammerjs";
+
 
 @Component({
     moduleId: module.id,
@@ -10,10 +10,11 @@ import "hammerjs";
     providers: []
 })
 export class TodoComponent {
-    private filter = true;
-    private filterId = true;
     private todo: any;
     private todoService: any;
+    private filter = true;
+    private filterId = true;
+    private selector: string = '.filters__link';
 
     constructor(
         @Inject(TodosService) todoService: TodosService,
@@ -39,7 +40,7 @@ export class TodoComponent {
     modWinDelHandler(index: number = null, userId: string = '', el: HTMLElement = undefined){
         const arr: Array<any> = [
             {itemVisibility: true, index: index, el: el, userId: userId, message: 'Do you wish to delete all done tasks, really?'},
-            {itemVisibility: true, index: index, el: el, userId: userId, message: `Do you wish to delete "${this.todoService.cutter(this.listItems[index].value)}" task?`}
+            {itemVisibility: true, index: index, el: el, userId: userId, message: 'Do you wish to delete this task?'}
         ];
         if(index || index === 0){
             // If event 'remove one to do'

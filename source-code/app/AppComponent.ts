@@ -77,7 +77,7 @@ export class AppComponent implements OnInit{
             );
         }
         // Application initialisation when we are logged in first time.
-        firebase.auth().onAuthStateChanged((user: any) => {
+        firebase.auth().onAuthStateChanged((user: any) => { //JIT
                 if (user) {
                     this.authorisationDataHandler(user, this.todoService.lSName);
                 } else {
@@ -101,10 +101,10 @@ export class AppComponent implements OnInit{
     authorisationDataHandler(obj: FirebaseAuthData, lSName: string[]): void {
         let userId = obj.uid;
         this.todoService.getData(userId)
-            .then((res: any) => { return this.appCmpntInit( this.todoService.appInit(this.todoService.jsonify(res.val()), lSName, userId))})
+            .then((res: any) => { return this.appCmpntInit( this.todoService.appInit(this.todoService.jsonify(res.val()), this.todoService.lSName, userId))})
             .then((res: any) => {
                 let listItems = res.listItems;
-                this.setAppStates(1, {
+                this.setAppStates.call(this, 1, {
                     listItems: listItems,
                     isChecked: this.todoService.matchAllAndDone(listItems),
                     quantityTodos: listItems.length,
@@ -112,12 +112,13 @@ export class AppComponent implements OnInit{
                     hide: res.hide,
                     logInBtn: `LoggedIn: ${obj.email}`,
                     userId: userId
-                })
+                }
+                )
             })
             .catch((error: Error) => this.errorH.handleError(error));
     }
     // Set App. component states
-    setAppStates(f: number, obj: object): void {
+    setAppStates(f: number, obj: LogInGuest | LogIn | ModalWindowHandler | ReturnedStates): void {
             if(f === 1){
                 ({listItems:this.listItems, logInBtn:this.logInBtn, isHidden:this.isHidden, hide:this.hide,
                     isChecked:this.isChecked, quantityTodos:this.quantityTodos, userId: this.userId} = obj);

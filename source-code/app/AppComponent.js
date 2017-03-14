@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11,18 +10,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var todos_service_1 = require("./services/todos.service/todos.service");
-var error_handler_service_1 = require("./services/error.handler.service/error.handler.service");
-var Observable_1 = require("rxjs/Observable");
-require("rxjs/add/operator/map");
-require("rxjs/add/operator/do");
-require("rxjs/add/operator/delay");
-require("rxjs/add/operator/debounceTime");
-require("rxjs/add/observable/interval");
-var app_module_1 = require("./app.module");
-require("firebase/auth");
+import { Component, Inject } from '@angular/core';
+import { TodosService } from "./services/todos.service/todos.service";
+import { ErrorHandlerService } from "./services/error.handler.service/error.handler.service";
+import { Observable } from "rxjs/Observable";
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/delay';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/observable/interval';
+import { FB as firebase } from "./app.module";
+import 'firebase/auth';
 var AppComponent = (function () {
     function AppComponent(todoService, errorH) {
         this.hide = true;
@@ -43,7 +41,7 @@ var AppComponent = (function () {
             this.setAppStates(1, this.guestInit(this.appCmpntInit(this.todoService.appInit(this.todoService.getLocalStorage(this.todoService.jsonify)(this.todoService.lSName[1]), this.todoService.lSName, this.todoService.lSName[1])), this.todoService.matchAllAndDone));
         }
         // Application initialisation when we are logged in first time.
-        app_module_1.FB.auth().onAuthStateChanged(function (user) {
+        firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
                 _this.authorisationDataHandler(user, _this.todoService.lSName);
             }
@@ -58,10 +56,10 @@ var AppComponent = (function () {
         var _this = this;
         var userId = obj.uid;
         this.todoService.getData(userId)
-            .then(function (res) { return _this.appCmpntInit(_this.todoService.appInit(_this.todoService.jsonify(res.val()), lSName, userId)); })
+            .then(function (res) { return _this.appCmpntInit(_this.todoService.appInit(_this.todoService.jsonify(res.val()), _this.todoService.lSName, userId)); })
             .then(function (res) {
             var listItems = res.listItems;
-            _this.setAppStates(1, {
+            _this.setAppStates.call(_this, 1, {
                 listItems: listItems,
                 isChecked: _this.todoService.matchAllAndDone(listItems),
                 quantityTodos: listItems.length,
@@ -155,7 +153,7 @@ var AppComponent = (function () {
             // To get Data from async block (see lower) we can use Promise
             var prom = new Promise(function (res, rej) {
                 // async block
-                var y = Observable_1.Observable.interval(150)
+                var y = Observable.interval(150)
                     .do(function (i) {
                     if (i <= listItems.length - 1 && listItems[i].done) {
                         (listItemsMap_1[i]) ? _this.rmTodoAnim(allTodosColl, i) : y.unsubscribe();
@@ -196,17 +194,17 @@ var AppComponent = (function () {
     return AppComponent;
 }());
 AppComponent = __decorate([
-    core_1.Component({
+    Component({
         moduleId: module.id,
         selector: 'app-root',
         styleUrls: ['app.component.css'],
         template: "<section class=\"wrapper\">\n        <div class=\"todos\">\n            <h1 class=\"todos__header\">To Do List</h1>\n            <div id=\"todos__body-id\" class=\"todos__body rel__item\">\n                <input type=\"text\" #name (keyup.enter)=\"setAppStates(3, onSubmit(name.value, listItems, todoService.lSName, userId)); name.value='';\" id=\"addItemInput\" \n                        class=\"todos__item\" placeholder=\"Add a to-do...\" [autofocus]=\"'true'\">\n                <input type=\"checkbox\" (click)=\"setAppStates(3,checkAllFunc(listItems, mainCheckBox.checked, todoService.lSName, userId))\" [checked]=\"isChecked\" #mainCheckBox \n                        [class.hidden]=\"isHidden\"  class=\"todos__checkbox todos__checkbox_main\" title=\"Active / Done\">\n                    <all-todos [class.hide]=\"hide\"  [data-userid]=\"userId\" [data-todo-list]=\"listItems\" \n                            (eventDeleteObserver)=\"setAppStates(2, modalWindowAppearance($event))\" (eventObserver)=\"setAppStates(3, $event)\" id=\"allTodos\"></all-todos>\n                <span [class.hide]=\"hide\" class=\"filters__count\">Total tasks: {{quantityTodos}}</span>\n            </div>\n            <div [class.hide]=\"hide\" class=\"rules\">Click to edit a Todo, Enter - to confirm changes, Esc - to leave editing!</div>\n        </div>\n        <auth-wndw [data-logInBtn]=\"logInBtn\" \n            (guestAccInit)=\"setAppStates(1, guestInit(\n                appCmpntInit(todoService.appInit( todoService.getLocalStorage(this.todoService.jsonify)(todoService.lSName[1]), todoService.lSName, todoService.lSName[1])), \n                    todoService.matchAllAndDone,$event))\" >\n        </auth-wndw>\n        <m-w-del-all-done id=\"m-w-del-all-done\" class=\"animated__long\" [style.display]=\"itemVisibility ? 'block' : 'none'\" [data-messages]=\"message\" (dataItemVisibility)=\"rmTodoHandler(buffer, listItems, $event, userId);itemVisibility = $event.itemVisibility;\"></m-w-del-all-done>\n    </section>",
         providers: []
     }),
-    __param(0, core_1.Inject(todos_service_1.TodosService)),
-    __param(1, core_1.Inject(error_handler_service_1.ErrorHandlerService)),
-    __metadata("design:paramtypes", [todos_service_1.TodosService,
-        error_handler_service_1.ErrorHandlerService])
+    __param(0, Inject(TodosService)),
+    __param(1, Inject(ErrorHandlerService)),
+    __metadata("design:paramtypes", [TodosService,
+        ErrorHandlerService])
 ], AppComponent);
-exports.AppComponent = AppComponent;
+export { AppComponent };
 //# sourceMappingURL=AppComponent.js.map

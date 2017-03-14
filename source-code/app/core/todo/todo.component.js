@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11,16 +10,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var todos_service_1 = require("../../services/todos.service/todos.service");
-require("hammerjs");
+import { Component, Inject, Input, Output, EventEmitter } from '@angular/core';
+import { TodosService } from "../../services/todos.service/todos.service";
 var TodoComponent = (function () {
     function TodoComponent(todoService) {
         this.filter = true;
         this.filterId = true;
-        this.eventObserver = new core_1.EventEmitter();
-        this.eventDeleteObserver = new core_1.EventEmitter();
+        this.selector = '.filters__link';
+        this.eventObserver = new EventEmitter();
+        this.eventDeleteObserver = new EventEmitter();
         this.todoService = todoService;
     }
     // Track changes in To do List array by 'id'.
@@ -39,7 +37,7 @@ var TodoComponent = (function () {
         if (el === void 0) { el = undefined; }
         var arr = [
             { itemVisibility: true, index: index, el: el, userId: userId, message: 'Do you wish to delete all done tasks, really?' },
-            { itemVisibility: true, index: index, el: el, userId: userId, message: "Do you wish to delete \"" + this.todoService.cutter(this.listItems[index].value) + "\" task?" }
+            { itemVisibility: true, index: index, el: el, userId: userId, message: 'Do you wish to delete this task?' }
         ];
         if (index || index === 0) {
             // If event 'remove one to do'
@@ -53,30 +51,30 @@ var TodoComponent = (function () {
     return TodoComponent;
 }());
 __decorate([
-    core_1.Input('data-userid'),
+    Input('data-userid'),
     __metadata("design:type", String)
 ], TodoComponent.prototype, "userId", void 0);
 __decorate([
-    core_1.Input('data-todo-list'),
+    Input('data-todo-list'),
     __metadata("design:type", Array)
 ], TodoComponent.prototype, "listItems", void 0);
 __decorate([
-    core_1.Output(),
-    __metadata("design:type", core_1.EventEmitter)
+    Output(),
+    __metadata("design:type", EventEmitter)
 ], TodoComponent.prototype, "eventObserver", void 0);
 __decorate([
-    core_1.Output(),
-    __metadata("design:type", core_1.EventEmitter)
+    Output(),
+    __metadata("design:type", EventEmitter)
 ], TodoComponent.prototype, "eventDeleteObserver", void 0);
 TodoComponent = __decorate([
-    core_1.Component({
+    Component({
         moduleId: module.id,
         selector: 'all-todos',
         templateUrl: 'todo.component.html',
         providers: []
     }),
-    __param(0, core_1.Inject(todos_service_1.TodosService)),
-    __metadata("design:paramtypes", [todos_service_1.TodosService])
+    __param(0, Inject(TodosService)),
+    __metadata("design:paramtypes", [TodosService])
 ], TodoComponent);
-exports.TodoComponent = TodoComponent;
+export { TodoComponent };
 //# sourceMappingURL=todo.component.js.map

@@ -8,6 +8,7 @@ import {TodosService} from "../services/todos.service/todos.service";
 import 'firebase/database';
 import {ListItem} from "../types/listItem/list.item";
 import {click, newEvent} from "./index";
+import {AuthService} from "../services/auth/auth.service";
 
 let testObj = [{id:0,value:"test",done:true}];
 let testObjLong = [{id:0,value:"test",done:true}, {id:1,value:"test",done:false}];
@@ -38,7 +39,7 @@ let elWithChildren: HTMLElement;
     </div>`
 })
 export class TestHtmlComponents {
-    constructor(private tds: TodosService){}
+    constructor(private tds: TodosService, private auth: AuthService){}
     f1(iserId: string) {
         return this.tds.getData(iserId);
     }
