@@ -279,7 +279,7 @@ body .hide_todo, body .rm_todo {
 body .filters__item {
   display: inline-block;
   text-align: center;
-  margin-bottom: 3px; }
+  margin: 10px 5px; }
 
 body .filters__link {
   -webkit-border-radius: 5px;

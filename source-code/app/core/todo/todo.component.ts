@@ -37,11 +37,13 @@ export class TodoComponent {
     }
     // Emit objects with data to execute it in AppComponent.
     modWinDelHandler(index: number = null, userId: string = '', el: HTMLElement = undefined){
+        let currTodoVal: string = (index || index === 0) ? this.todoService.cutter(this.listItems[index].value) : '';
         const arr: Array<any> = [
             {itemVisibility: true, index: index, el: el, userId: userId, message: 'Do you wish to delete all done tasks, really?'},
-            {itemVisibility: true, index: index, el: el, userId: userId, message: `Do you wish to delete "${this.todoService.cutter(this.listItems[index].value)}" task?`}
+            {itemVisibility: true, index: index, el: el, userId: userId, message: `Do you wish to delete "${currTodoVal}" task?`}
         ];
         if(index || index === 0){
+            currTodoVal = this.todoService.cutter(this.listItems[index].value);
             // If event 'remove one to do'
             this.eventDeleteObserver.emit( arr[1] );
         } else {

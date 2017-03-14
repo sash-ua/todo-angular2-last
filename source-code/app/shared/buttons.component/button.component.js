@@ -21,7 +21,7 @@ ButtonRaised = __decorate([
     Component({
         selector: 'raised-button',
         template: " <button md-raised-button class=\"r-brn\">{{ name }}</button>",
-        styles: [".r-brn {background-color: #e6e6e6;} .r-brn:hover {background-color: #cdcdcd;}"],
+        styles: ["\n        .r-brn {background-color: #e6e6e6; width: 127px;} \n        .r-brn:hover {background-color: #cdcdcd;}\n    "],
     })
 ], ButtonRaised);
 export { ButtonRaised };

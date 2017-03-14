@@ -35,11 +35,13 @@ var TodoComponent = (function () {
         if (index === void 0) { index = null; }
         if (userId === void 0) { userId = ''; }
         if (el === void 0) { el = undefined; }
+        var currTodoVal = (index || index === 0) ? this.todoService.cutter(this.listItems[index].value) : '';
         var arr = [
             { itemVisibility: true, index: index, el: el, userId: userId, message: 'Do you wish to delete all done tasks, really?' },
-            { itemVisibility: true, index: index, el: el, userId: userId, message: "Do you wish to delete \"" + this.todoService.cutter(this.listItems[index].value) + "\" task?" }
+            { itemVisibility: true, index: index, el: el, userId: userId, message: "Do you wish to delete \"" + currTodoVal + "\" task?" }
         ];
         if (index || index === 0) {
+            currTodoVal = this.todoService.cutter(this.listItems[index].value);
             // If event 'remove one to do'
             this.eventDeleteObserver.emit(arr[1]);
         }
