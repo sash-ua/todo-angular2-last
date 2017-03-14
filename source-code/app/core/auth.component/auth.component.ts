@@ -72,14 +72,12 @@ export class AuthComponent {
         } else {
             this.authService.signIn(ev.email, ev.pass)
                 .then((resp: any) => {
-                    console.log(resp);
                     if(resp.uid){
-                        this.signInMsgHandler("You have successfully registered!");
                         this.isHiddenAuth = 'inactive';
                     }
                 })
                 .catch((error: Error) => {
-                    this.signInMsgHandler(this.errorH.displayErrors(error));
+                    this.msgHandler(this.errorH.displayErrors(error));
                 });
         }
     }
@@ -89,13 +87,13 @@ export class AuthComponent {
         } else {
             this.authService.logIn(ev.email, ev.pass)
                 .then(resp => {
+                    console.log(resp);
                     if(resp.uid){
-                        this.signInMsgHandler("You have successfully logged in!");
                         this.isHiddenAuth = 'inactive';
                     }
                 })
                 .catch((error: Error) => {
-                    this.signInMsgHandler(this.errorH.displayErrors(error));
+                    this.msgHandler(this.errorH.displayErrors(error));
                 });
         }
     }
@@ -105,7 +103,6 @@ export class AuthComponent {
                 if(!resp) {
                     this.todoService.clearLocalStorage([this.todoService.lSName[0]]);
                     this.isHiddenAuth = 'inactive';
-                    this.signInMsgHandler("You have successfully logged out!");
                     this.guestAccInit.emit({guestAccInit: true});
                 }
             })
@@ -114,7 +111,7 @@ export class AuthComponent {
         });
     }
     // Info. messag
-    signInMsgHandler(msg: string){
+    msgHandler(msg: string){
         this.message = msg;
         this.alerts = 'active';
         setTimeout(()=> {

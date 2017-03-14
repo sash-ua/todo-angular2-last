@@ -31,14 +31,12 @@ var AuthComponent = (function () {
         else {
             this.authService.signIn(ev.email, ev.pass)
                 .then(function (resp) {
-                console.log(resp);
                 if (resp.uid) {
-                    _this.signInMsgHandler("You have successfully registered!");
                     _this.isHiddenAuth = 'inactive';
                 }
             })
                 .catch(function (error) {
-                _this.signInMsgHandler(_this.errorH.displayErrors(error));
+                _this.msgHandler(_this.errorH.displayErrors(error));
             });
         }
     };
@@ -50,13 +48,13 @@ var AuthComponent = (function () {
         else {
             this.authService.logIn(ev.email, ev.pass)
                 .then(function (resp) {
+                console.log(resp);
                 if (resp.uid) {
-                    _this.signInMsgHandler("You have successfully logged in!");
                     _this.isHiddenAuth = 'inactive';
                 }
             })
                 .catch(function (error) {
-                _this.signInMsgHandler(_this.errorH.displayErrors(error));
+                _this.msgHandler(_this.errorH.displayErrors(error));
             });
         }
     };
@@ -67,7 +65,6 @@ var AuthComponent = (function () {
             if (!resp) {
                 _this.todoService.clearLocalStorage([_this.todoService.lSName[0]]);
                 _this.isHiddenAuth = 'inactive';
-                _this.signInMsgHandler("You have successfully logged out!");
                 _this.guestAccInit.emit({ guestAccInit: true });
             }
         })
@@ -76,7 +73,7 @@ var AuthComponent = (function () {
         });
     };
     // Info. messag
-    AuthComponent.prototype.signInMsgHandler = function (msg) {
+    AuthComponent.prototype.msgHandler = function (msg) {
         var _this = this;
         this.message = msg;
         this.alerts = 'active';
