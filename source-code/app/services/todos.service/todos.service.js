@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11,29 +10,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var error_handler_service_1 = require("../error.handler.service/error.handler.service");
-var Observable_1 = require("rxjs/Observable");
-var app_module_1 = require("../../app.module");
-var app_module_2 = require("../../app.module");
-require("firebase/database");
+import { Injectable, Inject } from '@angular/core';
+import { ErrorHandlerService } from "../error.handler.service/error.handler.service";
+import { Observable } from "rxjs/Observable";
+import { firebaseConfig } from "../../app.module";
+import { FB as firebase } from "../../app.module";
+import 'firebase/database';
 var TodosService = (function () {
     function TodosService(errorH) {
-        this.lSName = ['todos', 'guest_todos', 'true', 'userId', "firebase:authUser:" + app_module_1.firebaseConfig.apiKey + ":[DEFAULT]",
+        this.lSName = ['todos', 'guest_todos', 'true', 'userId', "firebase:authUser:" + firebaseConfig.apiKey + ":[DEFAULT]",
             'Log In or Register', 'todos__item_todo'];
         this.errorH = errorH;
     }
     // Get data from database.
     TodosService.prototype.getData = function (userId) {
-        return app_module_2.FB.database().ref('/' + userId).once('value');
+        return firebase.database().ref('/' + userId).once('value');
     };
     TodosService.prototype.setData = function (data, userId) {
-        return app_module_2.FB.database().ref('/' + userId).set(data);
+        return firebase.database().ref('/' + userId).set(data);
     };
     // Create Observable from the object.
     TodosService.prototype.createObs = function (obj) {
-        return Observable_1.Observable.create(function (obs) { return obs.next(obj); });
+        return Observable.create(function (obs) { return obs.next(obj); });
     };
     // Object to JSON string and vice versa
     TodosService.prototype.jsonify = function (data) {
@@ -177,9 +175,9 @@ var TodosService = (function () {
     return TodosService;
 }());
 TodosService = __decorate([
-    core_1.Injectable(),
-    __param(0, core_1.Inject(error_handler_service_1.ErrorHandlerService)),
-    __metadata("design:paramtypes", [error_handler_service_1.ErrorHandlerService])
+    Injectable(),
+    __param(0, Inject(ErrorHandlerService)),
+    __metadata("design:paramtypes", [ErrorHandlerService])
 ], TodosService);
-exports.TodosService = TodosService;
+export { TodosService };
 //# sourceMappingURL=todos.service.js.map
