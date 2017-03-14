@@ -22,7 +22,8 @@
             // other libraries
             'rxjs':                      'npm:rxjs',
             'angular-in-memory-web-api': 'npm:angular-in-memory-web-api',
-            'firebase': 'npm:firebase'
+            'firebase': 'npm:firebase',
+            'hammerjs': 'npm:hammerjs'
         },
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {
@@ -39,6 +40,10 @@
             },
             'firebase': {
                 main: './app',
+                defaultExtension: 'js'
+            },
+            'hammerjs': {
+                main: './hammer',
                 defaultExtension: 'js'
             }
         }

@@ -53,6 +53,8 @@ module.exports = function(config) {
       {pattern: 'node_modules/@angular/**/*.js.map', included: false, watched: true},
       // Firebase
       { pattern: 'node_modules/firebase/*.js', included: false, watched: true },
+      // HammerJS
+      { pattern: 'node_modules/hammerjs/*.js', included: false, watched: true },
       // transpiled application & spec code paths loaded via module imports
       { pattern: appBase + '**/*.js', included: false, watched: true },
       { pattern: testBase + '**/*.js', included: false, watched: true },
