@@ -19,8 +19,8 @@ import {AuthForm} from "../../types/types";
         <md-card-actions>
             <raised-button [raised-button-name]="name"
                 (click)="authEvent.emit({email: si_email.value, pass:si_pass.value}); si_pass.value='';"></raised-button>
-            <raised-button [raised-button-name]="'Cancel'"
-                (click)="authEvent.emit({isHiddenAuth: 'inactive'}); si_email.value=''; si_pass.value='';"></raised-button>
+            <flat-button [raised-button-name]="'Cancel'"
+                (click)="authEvent.emit({isHiddenAuth: 'inactive'}); si_email.value=''; si_pass.value='';"></flat-button>
         </md-card-actions>
     </md-card-content>`
 })

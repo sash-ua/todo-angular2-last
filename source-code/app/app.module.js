@@ -1,59 +1,63 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from "@angular/forms";
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var platform_browser_1 = require("@angular/platform-browser");
+var forms_1 = require("@angular/forms");
 // ui
-import { MaterialModule } from "@angular/material";
+var material_1 = require("@angular/material");
 // DB
-import firebase from 'firebase/app';
+var app_1 = require("firebase/app");
 // components
-import { AppComponent } from "./AppComponent";
+var AppComponent_1 = require("./AppComponent");
 // modules
-import { CoreModule } from "./core/core.module";
-import { SharedModule } from "./shared/shared.module";
+var core_module_1 = require("./core/core.module");
+var shared_module_1 = require("./shared/shared.module");
 // services
-import { TodosService } from "./services/todos.service/todos.service";
-import { AuthService } from "./services/auth/auth.service";
-import { ErrorHandlerService } from "./services/error.handler.service/error.handler.service";
-import { ListItem } from "./types/listItem/list.item";
-export var firebaseConfig = {
+var todos_service_1 = require("./services/todos.service/todos.service");
+var auth_service_1 = require("./services/auth/auth.service");
+var error_handler_service_1 = require("./services/error.handler.service/error.handler.service");
+var list_item_1 = require("./types/listItem/list.item");
+var hammerjs_config_1 = require("./configs/hammerjs.config");
+exports.firebaseConfig = {
     apiKey: 'AIzaSyBFLWRbb4VXqoh_UXMA_wSwwzqwPyxmwDw',
     authDomain: 'todos-59dad.firebaseapp.com',
     databaseURL: 'https://todos-59dad.firebaseio.com',
     storageBucket: 'todos-59dad.appspot.com',
 };
-export var FB = firebase.initializeApp(firebaseConfig);
+exports.FB = app_1.default.initializeApp(exports.firebaseConfig);
 var AppModule = (function () {
     function AppModule() {
     }
     return AppModule;
 }());
 AppModule = __decorate([
-    NgModule({
+    core_1.NgModule({
         imports: [
-            BrowserModule,
-            FormsModule,
-            CoreModule,
-            SharedModule,
-            MaterialModule.forRoot()
+            platform_browser_1.BrowserModule,
+            forms_1.FormsModule,
+            core_module_1.CoreModule,
+            shared_module_1.SharedModule,
+            material_1.MaterialModule.forRoot()
         ],
         exports: [],
         declarations: [
-            AppComponent
+            AppComponent_1.AppComponent
         ],
         providers: [
-            TodosService,
-            ErrorHandlerService,
-            ListItem,
-            AuthService
+            todos_service_1.TodosService,
+            error_handler_service_1.ErrorHandlerService,
+            list_item_1.ListItem,
+            auth_service_1.AuthService,
+            { provide: platform_browser_1.HAMMER_GESTURE_CONFIG, useClass: hammerjs_config_1.HammerConfig }
         ],
-        bootstrap: [AppComponent],
+        bootstrap: [AppComponent_1.AppComponent],
     })
 ], AppModule);
-export { AppModule };
+exports.AppModule = AppModule;
 //# sourceMappingURL=app.module.js.map

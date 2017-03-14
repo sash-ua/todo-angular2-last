@@ -1,6 +1,4 @@
-/**
- * Created by Alex Tranchenko on 16.11.2016.
- */
+
 import {
     async, ComponentFixture, fakeAsync, inject, TestBed, tick
 } from '@angular/core/testing';
