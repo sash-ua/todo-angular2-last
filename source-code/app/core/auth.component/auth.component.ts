@@ -1,10 +1,5 @@
 import {
     Component,
-    trigger,
-    state,
-    style,
-    transition,
-    animate,
     Inject,
     Output,
     EventEmitter,
@@ -14,6 +9,7 @@ import {AuthService} from "../../services/auth/auth.service";
 import {ErrorHandlerService} from "../../services/error.handler.service/error.handler.service";
 import {TodosService} from "../../services/todos.service/todos.service";
 import {AuthForm} from "../../types/types";
+import {AnimationsService} from "../../services/animations.service/animations.service";
 
 
 @Component({
@@ -36,14 +32,12 @@ import {AuthForm} from "../../types/types";
     <m-w-alert [data-id]="this.message" [data-bind]="alerts" class="m-w-alert"></m-w-alert>
     `,
     animations: [
-        trigger('openHide',[
-            state('active', style({height: '595px', opacity: 1})),
-            state('inactive', style({height: 0, transform: 'translateX(150%)'})),
-            transition('* <=> *', [
-                animate(350)
-            ])])
+        AnimationsService.animaton('openHide', {height: '595px', opacity: 1},{height: 0, transform: 'translateY(0%)'})
     ],
-    providers: [AuthService]
+    providers: [
+        AuthService,
+        AnimationsService
+    ]
 })
 export class AuthComponent {
     private isHiddenAuth: string = 'inactive';
@@ -87,7 +81,6 @@ export class AuthComponent {
         } else {
             this.authService.logIn(ev.email, ev.pass)
                 .then(resp => {
-                    console.log(resp);
                     if(resp.uid){
                         this.isHiddenAuth = 'inactive';
                     }

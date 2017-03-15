@@ -8,7 +8,7 @@ import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/observable/interval';
 import {ListItem} from "./types/listItem/list.item";
-import {LogIn, ModalWindowHandler, ReturnedStates, LogInGuest, ModalWindowStates} from "./types/types";
+import {AppStates, ReturnedStates, ModalWindowStates} from "./types/types";
 
 import {FB as firebase} from "./app.module";
 import 'firebase/auth';
@@ -37,7 +37,7 @@ import 'firebase/auth';
                 appCmpntInit(todoService.appInit( todoService.getLocalStorage(this.todoService.jsonify)(todoService.lSName[1]), todoService.lSName, todoService.lSName[1])), 
                     todoService.matchAllAndDone,$event))" >
         </auth-wndw>
-        <m-w-del-all-done id="m-w-del-all-done" class="animated__long" [style.display]="itemVisibility ? 'block' : 'none'" [data-messages]="message" (dataItemVisibility)="rmTodoHandler(buffer, listItems, $event, userId);itemVisibility = $event.itemVisibility;"></m-w-del-all-done>
+        <m-w-del-all-done [style.display]="itemVisibility ? 'block' : 'none'" [data-messages]="message" (dataItemVisibility)="rmTodoHandler(buffer, listItems, $event, userId);itemVisibility = $event.itemVisibility;"></m-w-del-all-done>
     </section>`,
     providers: []
 })
@@ -72,8 +72,16 @@ export class AppComponent implements OnInit{
         } else {
             // No user is signed in.
             this.setAppStates(1,
-                this.guestInit(this.appCmpntInit(this.todoService.appInit( this.todoService.getLocalStorage(this.todoService.jsonify)(this.todoService.lSName[1]), this.todoService.lSName, this.todoService.lSName[1])),
-                    this.todoService.matchAllAndDone)
+                this.guestInit(
+                    this.appCmpntInit(
+                        this.todoService.appInit(
+                            this.todoService.getLocalStorage(this.todoService.jsonify)(this.todoService.lSName[1]),
+                            this.todoService.lSName,
+                            this.todoService.lSName[1]
+                        )
+                    ),
+                    this.todoService.matchAllAndDone
+                )
             );
         }
         // Application initialisation when we are logged in first time.
@@ -85,9 +93,11 @@ export class AppComponent implements OnInit{
                     this.setAppStates(1,
                         this.guestInit(
                             this.appCmpntInit(
-                                this.todoService.appInit( this.todoService.getLocalStorage(this.todoService.jsonify)(this.todoService.lSName[1]),
-                                this.todoService.lSName,
-                                this.todoService.lSName[1])
+                                this.todoService.appInit(
+                                    this.todoService.getLocalStorage(this.todoService.jsonify)(this.todoService.lSName[1]),
+                                    this.todoService.lSName,
+                                    this.todoService.lSName[1]
+                                )
                             ),
                             this.todoService.matchAllAndDone
                         )
@@ -116,6 +126,8 @@ export class AppComponent implements OnInit{
             })
             .catch((error: Error) => this.errorH.handleError(error));
     }
+
+
     // Set App. component states
     setAppStates(f: number, obj: object): void {
             if(f === 1){
@@ -129,7 +141,7 @@ export class AppComponent implements OnInit{
             }
     }
     // Application initialisation without log in to database.
-    guestInit(states: ReturnedStates, matchAllAndDone: Function, ev?: any): LogInGuest {
+    guestInit(states: ReturnedStates, matchAllAndDone: Function, ev?: any): AppStates {
         if(!ev || ev.guestAccInit === true) {
             let listItems = states.listItems;
             return {
@@ -152,10 +164,10 @@ export class AppComponent implements OnInit{
     }
     // User check 'checkAll' checkbox, then this func change app. states. Change this.listItems.
     checkAllFunc (arr: ListItem[], state: boolean, lSName: string[], userId?: string): ReturnedStates {
-        return Object.assign({listItems: this.todoService.highlightTodo(arr, state)}, this.todoService.changeStates(arr, lSName, userId));
+        return Object.assign({}, {listItems: this.todoService.highlightTodo(arr, state)}, this.todoService.changeStates(arr, lSName, userId));
     }
     // User add new to do item, then , then this func change app. states.
-    onSubmit(val:any, listItems: ListItem[], lSName: string[], userId?: string){
+    onSubmit(val:any, listItems: ListItem[], lSName: string[], userId?: string): ReturnedStates{
         if(this.todoService.inputValidation(val)) {
             let arr = this.todoService.addItem(val, listItems);
             return Object.assign({listItems: arr},this.todoService.changeStates(arr, lSName, userId));
@@ -186,7 +198,7 @@ export class AppComponent implements OnInit{
                 .delay(150)
                 .subscribe((resp: Object)=>{
                     let loc = this.todoService.removeTodo(listItems, resp.index);
-                    this.setAppStates(3, Object.assign({}, {listItems: loc}, this.todoService.changeStates(loc, this.todoService.lSName, userId)));
+                    this.setAppStates(3, {listItems: loc, ...this.todoService.changeStates(loc, this.todoService.lSName, userId)});
                 },
                     error => this.errorH.handleError(error)
                 );
@@ -216,7 +228,7 @@ export class AppComponent implements OnInit{
             prom.then((resp)=>{
     // To save the last removed item animation we should use the delay.
                 setTimeout(()=>{
-                    this.setAppStates(3, Object.assign({}, {listItems: arrL}, this.todoService.changeStates(arrL, this.todoService.lSName, userId)));
+                    this.setAppStates(3, {listItems: arrL, ...this.todoService.changeStates(arrL, this.todoService.lSName, userId)});
                 },200);
             });
         }

@@ -1,3 +1,11 @@
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -108,7 +116,7 @@ var AppComponent = (function () {
     };
     // User check 'checkAll' checkbox, then this func change app. states. Change this.listItems.
     AppComponent.prototype.checkAllFunc = function (arr, state, lSName, userId) {
-        return Object.assign({ listItems: this.todoService.highlightTodo(arr, state) }, this.todoService.changeStates(arr, lSName, userId));
+        return Object.assign({}, { listItems: this.todoService.highlightTodo(arr, state) }, this.todoService.changeStates(arr, lSName, userId));
     };
     // User add new to do item, then , then this func change app. states.
     AppComponent.prototype.onSubmit = function (val, listItems, lSName, userId) {
@@ -143,7 +151,7 @@ var AppComponent = (function () {
                 .delay(150)
                 .subscribe(function (resp) {
                 var loc = _this.todoService.removeTodo(listItems, resp.index);
-                _this.setAppStates(3, Object.assign({}, { listItems: loc }, _this.todoService.changeStates(loc, _this.todoService.lSName, userId)));
+                _this.setAppStates(3, __assign({ listItems: loc }, _this.todoService.changeStates(loc, _this.todoService.lSName, userId)));
             }, function (error) { return _this.errorH.handleError(error); });
             //  Remove all executed todos.
         }
@@ -172,7 +180,7 @@ var AppComponent = (function () {
             prom.then(function (resp) {
                 // To save the last removed item animation we should use the delay.
                 setTimeout(function () {
-                    _this.setAppStates(3, Object.assign({}, { listItems: arrL_1 }, _this.todoService.changeStates(arrL_1, _this.todoService.lSName, userId)));
+                    _this.setAppStates(3, __assign({ listItems: arrL_1 }, _this.todoService.changeStates(arrL_1, _this.todoService.lSName, userId)));
                 }, 200);
             });
         }
@@ -198,7 +206,7 @@ AppComponent = __decorate([
         moduleId: module.id,
         selector: 'app-root',
         styleUrls: ['app.component.css'],
-        template: "<section class=\"wrapper\">\n        <div class=\"todos\">\n            <h1 class=\"todos__header\">To Do List</h1>\n            <div id=\"todos__body-id\" class=\"todos__body rel__item\">\n                <input type=\"text\" #name (keyup.enter)=\"setAppStates(3, onSubmit(name.value, listItems, todoService.lSName, userId)); name.value='';\" id=\"addItemInput\" \n                        class=\"todos__item\" placeholder=\"Add a to-do...\" [autofocus]=\"'true'\">\n                <input type=\"checkbox\" (click)=\"setAppStates(3,checkAllFunc(listItems, mainCheckBox.checked, todoService.lSName, userId))\" [checked]=\"isChecked\" #mainCheckBox \n                        [class.hidden]=\"isHidden\"  class=\"todos__checkbox todos__checkbox_main\" title=\"Active / Done\">\n                    <all-todos [class.hide]=\"hide\"  [data-userid]=\"userId\" [data-todo-list]=\"listItems\" \n                            (eventDeleteObserver)=\"setAppStates(2, modalWindowAppearance($event))\" (eventObserver)=\"setAppStates(3, $event)\" id=\"allTodos\"></all-todos>\n                <span [class.hide]=\"hide\" class=\"filters__count\">Total tasks: {{quantityTodos}}</span>\n            </div>\n            <div [class.hide]=\"hide\" class=\"rules\">Click to edit a Todo, Enter - to confirm changes, Esc - to leave editing!</div>\n        </div>\n        <auth-wndw [data-logInBtn]=\"logInBtn\" \n            (guestAccInit)=\"setAppStates(1, guestInit(\n                appCmpntInit(todoService.appInit( todoService.getLocalStorage(this.todoService.jsonify)(todoService.lSName[1]), todoService.lSName, todoService.lSName[1])), \n                    todoService.matchAllAndDone,$event))\" >\n        </auth-wndw>\n        <m-w-del-all-done id=\"m-w-del-all-done\" class=\"animated__long\" [style.display]=\"itemVisibility ? 'block' : 'none'\" [data-messages]=\"message\" (dataItemVisibility)=\"rmTodoHandler(buffer, listItems, $event, userId);itemVisibility = $event.itemVisibility;\"></m-w-del-all-done>\n    </section>",
+        template: "<section class=\"wrapper\">\n        <div class=\"todos\">\n            <h1 class=\"todos__header\">To Do List</h1>\n            <div id=\"todos__body-id\" class=\"todos__body rel__item\">\n                <input type=\"text\" #name (keyup.enter)=\"setAppStates(3, onSubmit(name.value, listItems, todoService.lSName, userId)); name.value='';\" id=\"addItemInput\" \n                        class=\"todos__item\" placeholder=\"Add a to-do...\" [autofocus]=\"'true'\">\n                <input type=\"checkbox\" (click)=\"setAppStates(3,checkAllFunc(listItems, mainCheckBox.checked, todoService.lSName, userId))\" [checked]=\"isChecked\" #mainCheckBox \n                        [class.hidden]=\"isHidden\"  class=\"todos__checkbox todos__checkbox_main\" title=\"Active / Done\">\n                    <all-todos [class.hide]=\"hide\"  [data-userid]=\"userId\" [data-todo-list]=\"listItems\" \n                            (eventDeleteObserver)=\"setAppStates(2, modalWindowAppearance($event))\" (eventObserver)=\"setAppStates(3, $event)\" id=\"allTodos\"></all-todos>\n                <span [class.hide]=\"hide\" class=\"filters__count\">Total tasks: {{quantityTodos}}</span>\n            </div>\n            <div [class.hide]=\"hide\" class=\"rules\">Click to edit a Todo, Enter - to confirm changes, Esc - to leave editing!</div>\n        </div>\n        <auth-wndw [data-logInBtn]=\"logInBtn\" \n            (guestAccInit)=\"setAppStates(1, guestInit(\n                appCmpntInit(todoService.appInit( todoService.getLocalStorage(this.todoService.jsonify)(todoService.lSName[1]), todoService.lSName, todoService.lSName[1])), \n                    todoService.matchAllAndDone,$event))\" >\n        </auth-wndw>\n        <m-w-del-all-done [style.display]=\"itemVisibility ? 'block' : 'none'\" [data-messages]=\"message\" (dataItemVisibility)=\"rmTodoHandler(buffer, listItems, $event, userId);itemVisibility = $event.itemVisibility;\"></m-w-del-all-done>\n    </section>",
         providers: []
     }),
     __param(0, Inject(TodosService)),

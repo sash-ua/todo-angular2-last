@@ -39,7 +39,7 @@ export class TodosService{
                 this.errorH.handleError(new Error('jsonify Error'));
     }
     // Get LS by key
-    getLocalStorage(fn: Function): Object {
+    getLocalStorage(fn: Function): Function {
         return (key: string): Object => {
             return fn(localStorage.getItem(key));
         }

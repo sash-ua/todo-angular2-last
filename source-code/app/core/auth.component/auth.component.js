@@ -10,10 +10,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { Component, trigger, state, style, transition, animate, Inject, Output, EventEmitter, Input } from '@angular/core';
+import { Component, Inject, Output, EventEmitter, Input } from '@angular/core';
 import { AuthService } from "../../services/auth/auth.service";
 import { ErrorHandlerService } from "../../services/error.handler.service/error.handler.service";
 import { TodosService } from "../../services/todos.service/todos.service";
+import { AnimationsService } from "../../services/animations.service/animations.service";
 var AuthComponent = (function () {
     function AuthComponent(todoService, authService, errorH) {
         this.isHiddenAuth = 'inactive';
@@ -48,7 +49,6 @@ var AuthComponent = (function () {
         else {
             this.authService.logIn(ev.email, ev.pass)
                 .then(function (resp) {
-                console.log(resp);
                 if (resp.uid) {
                     _this.isHiddenAuth = 'inactive';
                 }
@@ -98,15 +98,12 @@ AuthComponent = __decorate([
         styleUrls: ['auth.component.css'],
         template: "\n    <cap [style.display]=\"isHiddenAuth === 'active' ? 'block' : 'none'\"></cap>\n    <flat-button [raised-button-name]=\"this.logInBtn\" (click)=\"isHiddenAuth === 'active' ? isHiddenAuth = 'inactive' : isHiddenAuth = 'active';\" class=\"reg-btn\"></flat-button>\n    <md-card id=\"auth-window\" class=\"auth-window wrapper\"\n            (keyup.escape)=\"isHiddenAuth = 'inactive'; $event.stopPropagation();\"\n            [@openHide]=\"isHiddenAuth\">\n        <auth-form [auth-form-name]=\"'SignIn'\" (authEvent)=\"signIn($event)\"></auth-form>\n        <auth-form [auth-form-name]=\"'LogIn'\" (authEvent)=\"logIn($event)\"></auth-form>\n        <md-toolbar class=\"auth-window__logout-name\">LogOut</md-toolbar>\n        <md-card-content class=\"auth-window__logout\">\n                <flat-button [raised-button-name]=\"'Log Out'\" (click)=\"logOut();\"></flat-button>\n        </md-card-content>\n    </md-card>\n    <m-w-alert [data-id]=\"this.message\" [data-bind]=\"alerts\" class=\"m-w-alert\"></m-w-alert>\n    ",
         animations: [
-            trigger('openHide', [
-                state('active', style({ height: '595px', opacity: 1 })),
-                state('inactive', style({ height: 0, transform: 'translateX(150%)' })),
-                transition('* <=> *', [
-                    animate(350)
-                ])
-            ])
+            AnimationsService.animaton('openHide', { height: '595px', opacity: 1 }, { height: 0, transform: 'translateY(0%)' })
         ],
-        providers: [AuthService]
+        providers: [
+            AuthService,
+            AnimationsService
+        ]
     }),
     __param(0, Inject(TodosService)),
     __param(1, Inject(AuthService)),

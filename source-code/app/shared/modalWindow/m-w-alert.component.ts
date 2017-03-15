@@ -1,4 +1,5 @@
-import {Component, Input, trigger, state, style, transition, animate} from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {AnimationsService} from "../../services/animations.service/animations.service";
 
 @Component({
     selector: 'm-w-alert',
@@ -7,16 +8,13 @@ import {Component, Input, trigger, state, style, transition, animate} from '@ang
         <h4 class="modal-window__header">{{this.message}}</h4>
     </div>`,
     animations: [
-        trigger('openHide',[
-            state('active', style({height: 'auto', opacity: 1, padding : '8px'})),
-            state('inactive', style({height: '0%', opacity: 0, padding: 0})),
-            transition('* <=> *', [
-                animate(300)
-            ])])
+        AnimationsService.animaton('openHide', {height: 'auto', opacity: 1},{height: '0%', opacity: 0})
     ],
+    providers: [
+        AnimationsService
+    ]
 })
 export class MWAlertComponent {
-
     constructor() { }
     @Input('data-id') message: string;
     @Input('data-bind') alerts: string;

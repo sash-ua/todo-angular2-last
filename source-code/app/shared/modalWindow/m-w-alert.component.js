@@ -7,7 +7,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, Input, trigger, state, style, transition, animate } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { AnimationsService } from "../../services/animations.service/animations.service";
 var MWAlertComponent = (function () {
     function MWAlertComponent() {
     }
@@ -26,14 +27,11 @@ MWAlertComponent = __decorate([
         selector: 'm-w-alert',
         template: "\n    <div [@openHide]=\"alerts\"  class=\"modal-window modal-window_alerts\">\n        <h4 class=\"modal-window__header\">{{this.message}}</h4>\n    </div>",
         animations: [
-            trigger('openHide', [
-                state('active', style({ height: 'auto', opacity: 1, padding: '8px' })),
-                state('inactive', style({ height: '0%', opacity: 0, padding: 0 })),
-                transition('* <=> *', [
-                    animate(300)
-                ])
-            ])
+            AnimationsService.animaton('openHide', { height: 'auto', opacity: 1 }, { height: '0%', opacity: 0 })
         ],
+        providers: [
+            AnimationsService
+        ]
     }),
     __metadata("design:paramtypes", [])
 ], MWAlertComponent);
