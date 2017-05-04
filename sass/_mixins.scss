@@ -1,0 +1,53 @@
+@import 'sprite';
+
+$ieSprite: '.lt-ie9' !default;
+$mq-base-font-size: 16px !default;
+//$sprite: map-get($icons, sprite) !default; //for creating svg sprite uncoomment
+
+@import 'bourbon';
+@import 'css3-mixins';
+@import 'sassMQ';
+//@import 'svg_sprite_mixins'; //for creating svg sprite uncoomment
+
+$uni-font-sz: calc(1em + 1vw);
+
+@mixin social($spr, $spr_hover){
+    @include sprite($spr);
+    &:hover {
+        @include sprite($spr_hover);
+    }
+}
+@mixin font-family($name, $size: $mq-base-font-size){
+    font-family : $name, Arial, Helvetica, sans-serif;
+    font-size : mq-px2em($size);
+}
+
+// Create a theme.
+@import '../node_modules/@angular/material/core/_core';
+@import '../node_modules/@angular/material/core/theming/_all-theme';
+
+@mixin my-angular-material-theme($theme) {
+    @include md-core-theme($theme);
+    //@include md-autocomplete-theme($theme);
+    @include md-button-theme($theme);
+    //@include md-button-toggle-theme($theme);
+    //@include md-card-theme($theme);
+    //@include md-checkbox-theme($theme);
+    //@include md-chips-theme($theme);
+    @include md-dialog-theme($theme);
+    //@include md-grid-list-theme($theme);
+    //@include md-icon-theme($theme);
+    @include md-input-theme($theme);
+    //@include md-list-theme($theme);
+    //@include md-menu-theme($theme);
+    //@include md-progress-bar-theme($theme);
+    @include md-progress-spinner-theme($theme);
+    //@include md-radio-theme($theme);
+    //@include md-select-theme($theme);
+    //@include md-sidenav-theme($theme);
+    //@include md-slide-toggle-theme($theme);
+    //@include md-slider-theme($theme);
+    //@include md-tabs-theme($theme);
+    //@include md-toolbar-theme($theme);
+    @include md-tooltip-theme($theme);
+}
