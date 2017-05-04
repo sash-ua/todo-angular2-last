@@ -9,4 +9,4 @@ Used:  Angular2 + TypeScript, Angular material, Firebase, Rollup, HammerJS, SCSS
 Cross-browser compatibility: latest versions of popular browsers.
 
 
-Copyright (c) 2016 Alex Tranchenko.
+Copyright (c) 2016 - present Alex Tranchenko.
